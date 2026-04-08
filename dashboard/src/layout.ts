@@ -19,10 +19,16 @@ export interface VizNodeData {
   routes: string[];
   apiCalls: string[];
   importCount: number;
+  lineCount: number;
   isGroup: boolean;
   highlighted: boolean;
   dimmed: boolean;
   active: boolean;
+  heatmapIntensity?: number;
+  heatmapCount?: number;
+  inCycle?: boolean;
+  impacted?: boolean;
+  apiMatch?: boolean;
   [key: string]: unknown;
 }
 
@@ -39,11 +45,11 @@ export interface LayerBand {
  */
 export function getConnectedSubgraph(
   rootId: string,
-  edges: { source: string; target: string }[]
+  edges: { source: string; target: string }[],
 ): Set<string> {
   // source → target means "source imports target"
   const downstream = new Map<string, Set<string>>(); // parent → children
-  const upstream = new Map<string, Set<string>>();   // child → parents
+  const upstream = new Map<string, Set<string>>(); // child → parents
   for (const e of edges) {
     if (!downstream.has(e.source)) downstream.set(e.source, new Set());
     downstream.get(e.source)!.add(e.target);
@@ -78,7 +84,7 @@ export function getConnectedSubgraph(
 export function buildFlowElements(
   structure: StructureData,
   collapsedGroups: Set<string>,
-  selectedNodeId: string | null
+  selectedNodeId: string | null,
 ): { nodes: Node<VizNodeData>[]; edges: Edge[]; layerBands: LayerBand[] } {
   // Hidden nodes from collapsed groups
   const hiddenNodes = new Set<string>();
@@ -93,7 +99,7 @@ export function buildFlowElements(
   const visibleNodes = structure.nodes.filter((n) => !hiddenNodes.has(n.id));
   const visibleIds = new Set(visibleNodes.map((n) => n.id));
   const visibleEdges = structure.edges.filter(
-    (e) => visibleIds.has(e.source) && visibleIds.has(e.target)
+    (e) => visibleIds.has(e.source) && visibleIds.has(e.target),
   );
 
   // Connected subgraph for click-highlight
@@ -129,7 +135,7 @@ export function buildFlowElements(
     const pos = g.node(sn.id);
     const color = LAYER_COLORS[sn.layer] || "#64748b";
     const isGroupParent = structure.groups.some(
-      (gr) => gr.parentId === sn.id && gr.childIds.length > 0
+      (gr) => gr.parentId === sn.id && gr.childIds.length > 0,
     );
     const isCollapsed = collapsedGroups.has(sn.id);
     const highlighted = connectedIds ? connectedIds.has(sn.id) : false;
@@ -148,6 +154,7 @@ export function buildFlowElements(
         routes: sn.routes,
         apiCalls: sn.apiCalls,
         importCount: sn.importCount,
+        lineCount: sn.lineCount ?? 0,
         isGroup: isGroupParent,
         highlighted,
         dimmed,
@@ -176,8 +183,8 @@ export function buildFlowElements(
         stroke: isHL
           ? LAYER_COLORS[srcLayer] || "#818cf8"
           : isDim
-          ? "#1e293b"
-          : "#334155",
+            ? "#1e293b"
+            : "#334155",
         strokeWidth: isHL ? 2.5 : 1.2,
         opacity: isDim ? 0.2 : 1,
       },
@@ -185,4 +192,12 @@ export function buildFlowElements(
   });
 
   return { nodes: flowNodes, edges: flowEdges, layerBands };
+}
+
+export function getHeatmapColor(intensity: number): string {
+  if (intensity <= 0) return "#334155";
+  const r = Math.round(51 + 204 * intensity);
+  const g = Math.round(65 + 130 * Math.max(0, 1 - intensity * 2));
+  const b = Math.round(85 * (1 - intensity));
+  return `rgb(${r},${g},${b})`;
 }

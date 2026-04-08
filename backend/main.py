@@ -86,6 +86,9 @@ active_nodes: dict[str, str] = {}
 _last_scan_time: float = 0.0
 _scan_in_progress = False
 
+# Component visit counts for heatmap analytics
+_component_visit_counts: dict[str, int] = {}
+
 
 # ───────────────────────── Models ─────────────────────────
 
@@ -272,6 +275,7 @@ async def post_interaction(event: InteractionEvent):
     # Track active nodes
     if event.eventType in ("mount", "navigate", "click"):
         active_nodes[event.componentName] = ts
+        _component_visit_counts[event.componentName] = _component_visit_counts.get(event.componentName, 0) + 1
     elif event.eventType == "unmount":
         active_nodes.pop(event.componentName, None)
 
@@ -299,12 +303,52 @@ async def clear_interactions():
     """Clear the interaction log and active nodes."""
     interaction_log.clear()
     active_nodes.clear()
+    _component_visit_counts.clear()
     await broadcast_to_dashboards({
         "type": "clear",
         "activeNodes": [],
     })
     logger.info("Interaction log cleared")
     return {"status": "ok"}
+
+
+# ───────────────────────── Analytics Endpoints ─────────────────────────
+
+
+@app.get("/api/analytics")
+async def get_analytics():
+    """Return analytics data: heatmap, circular deps, dead files, dependents."""
+    analytics: dict = {"heatmap": dict(_component_visit_counts)}
+    if current_structure:
+        sa = current_structure.get("analytics", {})
+        analytics["circularDeps"] = sa.get("circularDeps", [])
+        analytics["deadFiles"] = sa.get("deadFiles", [])
+        analytics["dependents"] = sa.get("dependents", {})
+    else:
+        analytics["circularDeps"] = []
+        analytics["deadFiles"] = []
+        analytics["dependents"] = {}
+    return analytics
+
+
+@app.get("/api/analytics/impact")
+async def get_change_impact(nodeId: str = Query(..., min_length=1)):
+    """Compute transitive dependents (who is impacted if this file changes)."""
+    if not current_structure:
+        return {"nodeId": nodeId, "impacted": []}
+    dependents = current_structure.get("analytics", {}).get("dependents", {})
+    visited: set[str] = set()
+    queue = [nodeId]
+    while queue:
+        n = queue.pop(0)
+        if n in visited:
+            continue
+        visited.add(n)
+        for parent in dependents.get(n, []):
+            if parent not in visited:
+                queue.append(parent)
+    visited.discard(nodeId)
+    return {"nodeId": nodeId, "impacted": list(visited)}
 
 
 # ───────────────────────── WebSocket Endpoints ─────────────────────────

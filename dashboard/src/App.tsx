@@ -17,8 +17,13 @@ import { toPng, toSvg } from "html-to-image";
 
 import { VizNode } from "./components/CustomNodes";
 import { useWebSocket } from "./hooks/useWebSocket";
-import { buildFlowElements, LAYER_COLORS, type LayerBand, type VizNodeData } from "./layout";
-import type { StructureData } from "./types";
+import {
+  buildFlowElements,
+  LAYER_COLORS,
+  type LayerBand,
+  type VizNodeData,
+} from "./layout";
+import type { StructureData, AnalyticsData } from "./types";
 
 const API_BASE = "/api";
 
@@ -29,7 +34,9 @@ function Dashboard() {
   const [structure, setStructure] = useState<StructureData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(new Set());
+  const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(
+    new Set(),
+  );
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [layerBands, setLayerBands] = useState<LayerBand[]>([]);
 
@@ -42,6 +49,16 @@ function Dashboard() {
 
   // Legend collapse
   const [legendCollapsed, setLegendCollapsed] = useState(false);
+
+  // Analytics state
+  const [analyticsOpen, setAnalyticsOpen] = useState(false);
+  const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
+  const [analyticsMode, setAnalyticsMode] = useState<
+    "none" | "heatmap" | "deadcode" | "circular" | "impact" | "api"
+  >("none");
+  const [selectedApiEndpoint, setSelectedApiEndpoint] = useState<string | null>(
+    null,
+  );
 
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
@@ -69,10 +86,23 @@ function Dashboard() {
     if (structureUpdate) setStructure(structureUpdate as StructureData);
   }, [structureUpdate]);
 
+  // ─── Fetch analytics ───
+  useEffect(() => {
+    if (!analyticsOpen && analyticsMode === "none") return;
+    fetch(`${API_BASE}/analytics`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => d && setAnalytics(d))
+      .catch(() => {});
+  }, [analyticsOpen, structure]);
+
   // ─── Recalculate layout ───
   useEffect(() => {
     if (!structure) return;
-    const result = buildFlowElements(structure, collapsedGroups, selectedNodeId);
+    const result = buildFlowElements(
+      structure,
+      collapsedGroups,
+      selectedNodeId,
+    );
     // Apply search match highlighting
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
@@ -97,10 +127,76 @@ function Dashboard() {
     } else {
       setSearchResults([]);
     }
+
+    // ─── Apply analytics mode ───
+    if (analyticsMode === "heatmap" && analytics?.heatmap) {
+      const counts = analytics.heatmap;
+      const maxCount = Math.max(1, ...Object.values(counts));
+      result.nodes = result.nodes.map((n) => {
+        const d = n.data as VizNodeData;
+        const name = d.label.replace(/ [▸▾]$/, "");
+        const count = counts[name] || 0;
+        return {
+          ...n,
+          data: {
+            ...d,
+            heatmapIntensity: count / maxCount,
+            heatmapCount: count,
+          },
+        };
+      });
+    }
+    if (analyticsMode === "circular" && structure?.analytics?.circularDeps) {
+      const cycleNodes = new Set(structure.analytics.circularDeps.flat());
+      result.nodes = result.nodes.map((n) => ({
+        ...n,
+        data: { ...n.data, inCycle: cycleNodes.has(n.id) },
+      }));
+    }
+    if (analyticsMode === "impact" && selectedNodeId && analytics?.dependents) {
+      const deps = analytics.dependents;
+      const impacted = new Set<string>();
+      const q = [selectedNodeId];
+      while (q.length) {
+        const id = q.shift()!;
+        if (impacted.has(id)) continue;
+        impacted.add(id);
+        for (const p of deps[id] || []) {
+          if (!impacted.has(p)) q.push(p);
+        }
+      }
+      result.nodes = result.nodes.map((n) => ({
+        ...n,
+        data: { ...n.data, impacted: impacted.has(n.id) },
+      }));
+    }
+    if (analyticsMode === "api" && selectedApiEndpoint) {
+      result.nodes = result.nodes.map((n) => {
+        const d = n.data as VizNodeData;
+        const match =
+          d.apiCalls.includes(selectedApiEndpoint) ||
+          d.label === selectedApiEndpoint;
+        return {
+          ...n,
+          data: { ...d, apiMatch: match, dimmed: !match && !d.highlighted },
+        };
+      });
+    }
+
     setNodes(result.nodes);
     setEdges(result.edges);
     setLayerBands(result.layerBands);
-  }, [structure, collapsedGroups, selectedNodeId, searchQuery, setNodes, setEdges]);
+  }, [
+    structure,
+    collapsedGroups,
+    selectedNodeId,
+    searchQuery,
+    analyticsMode,
+    analytics,
+    selectedApiEndpoint,
+    setNodes,
+    setEdges,
+  ]);
 
   // ─── Runtime active-node glow ───
   useEffect(() => {
@@ -110,11 +206,13 @@ function Dashboard() {
         const isActive = activeNodes.some(
           (an) =>
             n.id.toLowerCase().includes(an.toLowerCase()) ||
-            an.toLowerCase().includes(d.label.replace(/ [▸▾]$/, "").toLowerCase())
+            an
+              .toLowerCase()
+              .includes(d.label.replace(/ [▸▾]$/, "").toLowerCase()),
         );
         if (d.active === isActive) return n;
         return { ...n, data: { ...d, active: isActive } };
-      })
+      }),
     );
   }, [activeNodes, setNodes]);
 
@@ -137,7 +235,7 @@ function Dashboard() {
         setSelectedNodeId(nodeId);
       }
     },
-    [nodes, setCenter]
+    [nodes, setCenter],
   );
 
   // ─── Search navigation ───
@@ -150,7 +248,8 @@ function Dashboard() {
 
   const prevSearchResult = useCallback(() => {
     if (searchResults.length === 0) return;
-    const prevIdx = (searchIdx - 1 + searchResults.length) % searchResults.length;
+    const prevIdx =
+      (searchIdx - 1 + searchResults.length) % searchResults.length;
     setSearchIdx(prevIdx);
     zoomToNode(searchResults[prevIdx]);
   }, [searchResults, searchIdx, zoomToNode]);
@@ -159,7 +258,11 @@ function Dashboard() {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       // "/" → open search (only if no input focused)
-      if (e.key === "/" && !searchOpen && document.activeElement?.tagName !== "INPUT") {
+      if (
+        e.key === "/" &&
+        !searchOpen &&
+        document.activeElement?.tagName !== "INPUT"
+      ) {
         e.preventDefault();
         setSearchOpen(true);
         setTimeout(() => searchInputRef.current?.focus(), 50);
@@ -196,27 +299,24 @@ function Dashboard() {
   }, [searchOpen, fitView, nextSearchResult, prevSearchResult]);
 
   // ─── Export diagram ───
-  const exportDiagram = useCallback(
-    async (format: "png" | "svg") => {
-      const el = document.querySelector<HTMLElement>(".react-flow__viewport");
-      if (!el) return;
-      try {
-        const fn = format === "png" ? toPng : toSvg;
-        const dataUrl = await fn(el, {
-          backgroundColor: "#0a0e1a",
-          quality: 1,
-          pixelRatio: 2,
-        });
-        const link = document.createElement("a");
-        link.download = `repo-visualization.${format}`;
-        link.href = dataUrl;
-        link.click();
-      } catch (err) {
-        console.error("Export failed:", err);
-      }
-    },
-    []
-  );
+  const exportDiagram = useCallback(async (format: "png" | "svg") => {
+    const el = document.querySelector<HTMLElement>(".react-flow__viewport");
+    if (!el) return;
+    try {
+      const fn = format === "png" ? toPng : toSvg;
+      const dataUrl = await fn(el, {
+        backgroundColor: "#0a0e1a",
+        quality: 1,
+        pixelRatio: 2,
+      });
+      const link = document.createElement("a");
+      link.download = `repo-visualization.${format}`;
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      console.error("Export failed:", err);
+    }
+  }, []);
 
   // ─── Scan handler ───
   const handleScan = useCallback(async () => {
@@ -254,7 +354,7 @@ function Dashboard() {
     (_event, node) => {
       if (!structure) return;
       const isGroupParent = structure.groups.some(
-        (g) => g.parentId === node.id && g.childIds.length > 0
+        (g) => g.parentId === node.id && g.childIds.length > 0,
       );
       if (isGroupParent) {
         setCollapsedGroups((prev) => {
@@ -265,7 +365,7 @@ function Dashboard() {
         });
       }
     },
-    [structure]
+    [structure],
   );
 
   // ─── Legend items ───
@@ -277,7 +377,7 @@ function Dashboard() {
       { color: LAYER_COLORS.api_service, label: "API Services" },
       { color: LAYER_COLORS.api_endpoint, label: "Endpoints" },
     ],
-    []
+    [],
   );
 
   return (
@@ -296,21 +396,46 @@ function Dashboard() {
           {loading ? "Scanning…" : "⟳ Sync"}
         </button>
 
-        {/* Export buttons */}
+        {/* Export & Analytics buttons */}
         <div className="toolbar-group">
-          <button className="toolbar-btn-secondary" onClick={() => exportDiagram("png")} title="Export as PNG">
+          <button
+            className="toolbar-btn-secondary"
+            onClick={() => exportDiagram("png")}
+            title="Export as PNG"
+          >
             ⤓ PNG
           </button>
-          <button className="toolbar-btn-secondary" onClick={() => exportDiagram("svg")} title="Export as SVG">
+          <button
+            className="toolbar-btn-secondary"
+            onClick={() => exportDiagram("svg")}
+            title="Export as SVG"
+          >
             ⤓ SVG
+          </button>
+          <button
+            className={`toolbar-btn-secondary ${analyticsOpen ? "toolbar-btn-secondary--active" : ""}`}
+            onClick={() => {
+              setAnalyticsOpen((p) => !p);
+              if (analyticsOpen) {
+                setAnalyticsMode("none");
+                setSelectedApiEndpoint(null);
+              }
+            }}
+            title="Analytics Panel"
+          >
+            📊 Analytics
           </button>
         </div>
 
         <span className="status">
-          <span className={`ws-dot ${connected ? "connected" : "disconnected"}`} />
+          <span
+            className={`ws-dot ${connected ? "connected" : "disconnected"}`}
+          />
           {connected ? "Live" : "Offline"}
         </span>
-        {error && <span style={{ color: "var(--danger)", fontSize: 12 }}>{error}</span>}
+        {error && (
+          <span style={{ color: "var(--danger)", fontSize: 12 }}>{error}</span>
+        )}
 
         {/* Keyboard hint */}
         <span className="toolbar-shortcuts">
@@ -321,13 +446,26 @@ function Dashboard() {
       {/* ─── Metadata bar ─── */}
       {structure && (
         <div className="metadata-bar">
-          <span>Files: <strong>{structure.metadata.analyzedFiles}</strong> / {structure.metadata.totalFiles}</span>
-          <span>Tree-shaked: <strong>{structure.metadata.treeShakedFiles}</strong></span>
-          <span>Edges: <strong>{structure.metadata.totalEdges}</strong></span>
-          <span>Endpoints: <strong>{structure.metadata.apiEndpoints}</strong></span>
-          <span>Active: <strong>{activeNodes.length}</strong></span>
+          <span>
+            Files: <strong>{structure.metadata.analyzedFiles}</strong> /{" "}
+            {structure.metadata.totalFiles}
+          </span>
+          <span>
+            Tree-shaked: <strong>{structure.metadata.treeShakedFiles}</strong>
+          </span>
+          <span>
+            Edges: <strong>{structure.metadata.totalEdges}</strong>
+          </span>
+          <span>
+            Endpoints: <strong>{structure.metadata.apiEndpoints}</strong>
+          </span>
+          <span>
+            Active: <strong>{activeNodes.length}</strong>
+          </span>
           {structure.metadata.framework && (
-            <span>Framework: <strong>{structure.metadata.framework}</strong></span>
+            <span>
+              Framework: <strong>{structure.metadata.framework}</strong>
+            </span>
           )}
         </div>
       )}
@@ -363,11 +501,25 @@ function Dashboard() {
             )}
             {searchResults.length > 0 && (
               <div className="search-bar__nav">
-                <button onClick={prevSearchResult} title="Previous (Shift+Enter)">↑</button>
-                <button onClick={nextSearchResult} title="Next (Enter)">↓</button>
+                <button
+                  onClick={prevSearchResult}
+                  title="Previous (Shift+Enter)"
+                >
+                  ↑
+                </button>
+                <button onClick={nextSearchResult} title="Next (Enter)">
+                  ↓
+                </button>
               </div>
             )}
-            <button className="search-bar__close" onClick={() => { setSearchOpen(false); setSearchQuery(""); setSearchResults([]); }}>
+            <button
+              className="search-bar__close"
+              onClick={() => {
+                setSearchOpen(false);
+                setSearchQuery("");
+                setSearchResults([]);
+              }}
+            >
               ✕
             </button>
           </div>
@@ -382,9 +534,15 @@ function Dashboard() {
                   <button
                     key={id}
                     className={`search-result-item ${i === searchIdx ? "search-result-item--active" : ""}`}
-                    onClick={() => { setSearchIdx(i); zoomToNode(id); }}
+                    onClick={() => {
+                      setSearchIdx(i);
+                      zoomToNode(id);
+                    }}
                   >
-                    <span className="search-result-dot" style={{ background: d.color }} />
+                    <span
+                      className="search-result-dot"
+                      style={{ background: d.color }}
+                    />
                     <span className="search-result-label">{d.label}</span>
                     <span className="search-result-layer">{d.layerLabel}</span>
                   </button>
@@ -402,6 +560,226 @@ function Dashboard() {
 
       {/* ─── Diagram ─── */}
       <div className="diagram-container" style={{ flex: 1 }}>
+        {/* ─── Analytics Panel ─── */}
+        {analyticsOpen && (
+          <div className="analytics-panel">
+            <div className="analytics-panel__header">
+              <span>📊 Analytics</span>
+              <button
+                className="analytics-panel__close"
+                onClick={() => {
+                  setAnalyticsOpen(false);
+                  setAnalyticsMode("none");
+                  setSelectedApiEndpoint(null);
+                }}
+              >
+                ✕
+              </button>
+            </div>
+            <div className="analytics-panel__modes">
+              {(
+                ["heatmap", "deadcode", "circular", "impact", "api"] as const
+              ).map((mode) => (
+                <button
+                  key={mode}
+                  className={`analytics-mode-btn ${analyticsMode === mode ? "analytics-mode-btn--active" : ""}`}
+                  onClick={() =>
+                    setAnalyticsMode((prev) => (prev === mode ? "none" : mode))
+                  }
+                >
+                  {mode === "heatmap" && "🔥 Heat"}
+                  {mode === "deadcode" && "💀 Dead"}
+                  {mode === "circular" && "🔄 Cycles"}
+                  {mode === "impact" && "💥 Impact"}
+                  {mode === "api" && "🔌 API"}
+                </button>
+              ))}
+            </div>
+            <div className="analytics-panel__body">
+              {analyticsMode === "heatmap" && analytics && (
+                <div className="analytics-section">
+                  <div className="analytics-section__title">
+                    Component Usage Heatmap
+                  </div>
+                  <div className="analytics-section__desc">
+                    Nodes colored by runtime interaction frequency
+                  </div>
+                  {Object.entries(analytics.heatmap)
+                    .sort(([, a], [, b]) => b - a)
+                    .slice(0, 20)
+                    .map(([name, count]) => (
+                      <div key={name} className="analytics-row">
+                        <span className="analytics-row__name">{name}</span>
+                        <span className="analytics-row__value">{count}</span>
+                      </div>
+                    ))}
+                  {Object.keys(analytics.heatmap).length === 0 && (
+                    <div className="analytics-empty">
+                      No interactions recorded yet. Use the demo app to generate
+                      data.
+                    </div>
+                  )}
+                </div>
+              )}
+              {analyticsMode === "deadcode" && analytics && (
+                <div className="analytics-section">
+                  <div className="analytics-section__title">
+                    Unused Files ({analytics.deadFiles.length})
+                  </div>
+                  <div className="analytics-section__desc">
+                    Files not reachable from entry points
+                  </div>
+                  {analytics.deadFiles.map((f, i) => (
+                    <div key={i} className="analytics-row">
+                      <span className="analytics-row__name">{f.label}</span>
+                      <span className="analytics-row__layer">{f.layer}</span>
+                    </div>
+                  ))}
+                  {analytics.deadFiles.length === 0 && (
+                    <div className="analytics-empty">
+                      All files are reachable from entry points ✓
+                    </div>
+                  )}
+                </div>
+              )}
+              {analyticsMode === "circular" && analytics && (
+                <div className="analytics-section">
+                  <div className="analytics-section__title">
+                    Circular Dependencies ({analytics.circularDeps.length})
+                  </div>
+                  <div className="analytics-section__desc">
+                    Import cycles that may cause issues
+                  </div>
+                  {analytics.circularDeps.map((cycle, i) => (
+                    <div key={i} className="analytics-cycle">
+                      {cycle.map((id, j) => {
+                        const node = nodes.find((n) => n.id === id);
+                        const label = node
+                          ? (node.data as VizNodeData).label
+                          : id;
+                        return (
+                          <span key={j}>
+                            <button
+                              className="analytics-cycle__node"
+                              onClick={() => zoomToNode(id)}
+                            >
+                              {label}
+                            </button>
+                            {j < cycle.length - 1 && (
+                              <span className="analytics-cycle__arrow">→</span>
+                            )}
+                          </span>
+                        );
+                      })}
+                      <span className="analytics-cycle__arrow">↩</span>
+                    </div>
+                  ))}
+                  {analytics.circularDeps.length === 0 && (
+                    <div className="analytics-empty">
+                      No circular dependencies detected ✓
+                    </div>
+                  )}
+                </div>
+              )}
+              {analyticsMode === "impact" && (
+                <div className="analytics-section">
+                  <div className="analytics-section__title">
+                    Change Impact Analysis
+                  </div>
+                  <div className="analytics-section__desc">
+                    {selectedNodeId
+                      ? "Showing files affected by changes to the selected node"
+                      : "Click a node in the graph to analyze its impact"}
+                  </div>
+                  {selectedNodeId &&
+                    analytics &&
+                    (() => {
+                      const impactedSet = new Set<string>();
+                      const queue = [selectedNodeId];
+                      const deps = analytics.dependents || {};
+                      while (queue.length) {
+                        const id = queue.shift()!;
+                        if (impactedSet.has(id)) continue;
+                        impactedSet.add(id);
+                        for (const parent of deps[id] || []) {
+                          if (!impactedSet.has(parent)) queue.push(parent);
+                        }
+                      }
+                      impactedSet.delete(selectedNodeId);
+                      const impactedNodes = Array.from(impactedSet)
+                        .map((id) => nodes.find((n) => n.id === id))
+                        .filter(Boolean);
+                      return (
+                        <>
+                          <div className="analytics-row analytics-row--highlight">
+                            <span className="analytics-row__name">
+                              Impacted files
+                            </span>
+                            <span className="analytics-row__value">
+                              {impactedNodes.length}
+                            </span>
+                          </div>
+                          {impactedNodes.map((n) => (
+                            <div key={n!.id} className="analytics-row">
+                              <button
+                                className="analytics-cycle__node"
+                                onClick={() => zoomToNode(n!.id)}
+                              >
+                                {(n!.data as VizNodeData).label}
+                              </button>
+                            </div>
+                          ))}
+                        </>
+                      );
+                    })()}
+                </div>
+              )}
+              {analyticsMode === "api" && (
+                <div className="analytics-section">
+                  <div className="analytics-section__title">
+                    API Dependency Map
+                  </div>
+                  <div className="analytics-section__desc">
+                    Click an endpoint to highlight its consumers
+                  </div>
+                  {structure &&
+                    (() => {
+                      const endpoints = new Set<string>();
+                      structure.nodes.forEach((n) => {
+                        n.apiCalls.forEach((c) => endpoints.add(c));
+                        if (n.layer === "api_endpoint") endpoints.add(n.label);
+                      });
+                      return Array.from(endpoints)
+                        .sort()
+                        .map((ep) => (
+                          <button
+                            key={ep}
+                            className={`analytics-api-btn ${selectedApiEndpoint === ep ? "analytics-api-btn--active" : ""}`}
+                            onClick={() =>
+                              setSelectedApiEndpoint((prev) =>
+                                prev === ep ? null : ep,
+                              )
+                            }
+                          >
+                            {ep}
+                          </button>
+                        ));
+                    })()}
+                  {!structure && (
+                    <div className="analytics-empty">
+                      Scan a repository first
+                    </div>
+                  )}
+                </div>
+              )}
+              {analyticsMode === "none" && (
+                <div className="analytics-empty">
+                  Select an analytics mode above
+                </div>
+              )}
+            </div>
+          </div>
+        )}
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -438,11 +816,16 @@ function Dashboard() {
             <>
               {legendItems.map((item) => (
                 <div className="legend-item" key={item.label}>
-                  <div className="legend-dot" style={{ background: item.color }} />
+                  <div
+                    className="legend-dot"
+                    style={{ background: item.color }}
+                  />
                   {item.label}
                 </div>
               ))}
-              <div className="legend-hint">Click highlight · Dbl-click collapse</div>
+              <div className="legend-hint">
+                Click highlight · Dbl-click collapse
+              </div>
             </>
           )}
         </div>
@@ -452,11 +835,16 @@ function Dashboard() {
           <div className="event-log">
             <div className="event-log-header">
               <span>Runtime Events</span>
-              <span style={{ color: "var(--text-muted)" }}>{events.length}</span>
+              <span style={{ color: "var(--text-muted)" }}>
+                {events.length}
+              </span>
             </div>
             <div className="event-log-body" ref={eventLogRef}>
               {[...events].reverse().map((ev, i) => (
-                <div className={`event-entry ${i === 0 ? "event-entry--new" : ""}`} key={i}>
+                <div
+                  className={`event-entry ${i === 0 ? "event-entry--new" : ""}`}
+                  key={i}
+                >
                   <span
                     className="event-type"
                     style={{
@@ -464,10 +852,10 @@ function Dashboard() {
                         ev.eventType === "mount"
                           ? "var(--success)"
                           : ev.eventType === "click"
-                          ? "var(--warning)"
-                          : ev.eventType === "unmount"
-                          ? "var(--danger)"
-                          : "var(--accent)",
+                            ? "var(--warning)"
+                            : ev.eventType === "unmount"
+                              ? "var(--danger)"
+                              : "var(--accent)",
                     }}
                   >
                     {ev.eventType}

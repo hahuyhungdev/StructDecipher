@@ -1,7 +1,7 @@
 {
-  "repoPath": "/home/huyhung/projects/personals/roadmap-english-ai",
-  "srcRoot": "/home/huyhung/projects/personals/roadmap-english-ai/src",
-  "framework": "nextjs",
+  "repoPath": "/home/huyhung/projects/personals/visualization-repo/demo-app",
+  "srcRoot": "/home/huyhung/projects/personals/visualization-repo/demo-app/src",
+  "framework": "react",
   "layers": [
     {
       "id": "page",
@@ -54,1472 +54,386 @@
   ],
   "nodes": [
     {
-      "id": "app_api_ai_route_ts",
-      "label": "/api/ai (Route)",
-      "filePath": "app/api/ai/route.ts",
-      "layer": "api_route",
-      "layerIndex": 3,
-      "layerLabel": "API Routes",
-      "apiCalls": [],
-      "routes": [
-        "/api/ai"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_api_coach_route_ts",
-      "label": "/api/coach (Route)",
-      "filePath": "app/api/coach/route.ts",
-      "layer": "api_route",
-      "layerIndex": 3,
-      "layerLabel": "API Routes",
-      "apiCalls": [],
-      "routes": [
-        "/api/coach"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_api_progress_route_ts",
-      "label": "/api/progress (Route)",
-      "filePath": "app/api/progress/route.ts",
-      "layer": "api_route",
-      "layerIndex": 3,
-      "layerLabel": "API Routes",
-      "apiCalls": [],
-      "routes": [
-        "/api/progress"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_api_shadowing_script_route_ts",
-      "label": "/api/shadowing/script (Route)",
-      "filePath": "app/api/shadowing/script/route.ts",
-      "layer": "api_route",
-      "layerIndex": 3,
-      "layerLabel": "API Routes",
-      "apiCalls": [],
-      "routes": [
-        "/api/shadowing/script"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_api_shadowing_sessions__id__route_ts",
-      "label": "/api/shadowing/sessions/[id] (Route)",
-      "filePath": "app/api/shadowing/sessions/[id]/route.ts",
-      "layer": "api_route",
-      "layerIndex": 3,
-      "layerLabel": "API Routes",
-      "apiCalls": [],
-      "routes": [
-        "/api/shadowing/sessions/[id]"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_api_shadowing_sessions_route_ts",
-      "label": "/api/shadowing/sessions (Route)",
-      "filePath": "app/api/shadowing/sessions/route.ts",
-      "layer": "api_route",
-      "layerIndex": 3,
-      "layerLabel": "API Routes",
-      "apiCalls": [],
-      "routes": [
-        "/api/shadowing/sessions"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_api_shadowing_youtube_raw_segments_route_ts",
-      "label": "/api/shadowing/youtube/raw-segments (Route)",
-      "filePath": "app/api/shadowing/youtube/raw-segments/route.ts",
-      "layer": "api_route",
-      "layerIndex": 3,
-      "layerLabel": "API Routes",
-      "apiCalls": [],
-      "routes": [
-        "/api/shadowing/youtube/raw-segments"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_api_shadowing_youtube_transcript_route_ts",
-      "label": "/api/shadowing/youtube/transcript (Route)",
-      "filePath": "app/api/shadowing/youtube/transcript/route.ts",
-      "layer": "api_route",
-      "layerIndex": 3,
-      "layerLabel": "API Routes",
-      "apiCalls": [
-        "/transcript/",
-        "/transcript"
-      ],
-      "routes": [
-        "/api/shadowing/youtube/transcript"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_api_shadowing_youtube_translate_route_ts",
-      "label": "/api/shadowing/youtube/translate (Route)",
-      "filePath": "app/api/shadowing/youtube/translate/route.ts",
-      "layer": "api_route",
-      "layerIndex": 3,
-      "layerLabel": "API Routes",
-      "apiCalls": [],
-      "routes": [
-        "/api/shadowing/youtube/translate"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_api_shadowing_youtube_usage_route_ts",
-      "label": "/api/shadowing/youtube/usage (Route)",
-      "filePath": "app/api/shadowing/youtube/usage/route.ts",
-      "layer": "api_route",
-      "layerIndex": 3,
-      "layerLabel": "API Routes",
-      "apiCalls": [],
-      "routes": [
-        "/api/shadowing/youtube/usage"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_api_transcript_route_ts",
-      "label": "/api/transcript (Route)",
-      "filePath": "app/api/transcript/route.ts",
-      "layer": "api_route",
-      "layerIndex": 3,
-      "layerLabel": "API Routes",
-      "apiCalls": [],
-      "routes": [
-        "/api/transcript"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_api_tts_route_ts",
-      "label": "/api/tts (Route)",
-      "filePath": "app/api/tts/route.ts",
-      "layer": "api_route",
-      "layerIndex": 3,
-      "layerLabel": "API Routes",
-      "apiCalls": [],
-      "routes": [
-        "/api/tts"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_api_voice_route_ts",
-      "label": "/api/voice (Route)",
-      "filePath": "app/api/voice/route.ts",
-      "layer": "api_route",
-      "layerIndex": 3,
-      "layerLabel": "API Routes",
-      "apiCalls": [],
-      "routes": [
-        "/api/voice"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_lib_googleTtsClient_ts",
-      "label": "googleTtsClient",
-      "filePath": "app/lib/googleTtsClient.ts",
+      "id": "src_App_tsx",
+      "label": "App",
+      "filePath": "src/App.tsx",
       "layer": "shared",
       "layerIndex": 2,
       "layerLabel": "Shared / UI",
-      "apiCalls": [
-        "https://texttospeech.googleapis.com/v1/text:synthesize?key="
+      "apiCalls": [],
+      "routes": [
+        "/",
+        "/dashboard"
       ],
-      "routes": [],
-      "importCount": 2
+      "importCount": 1,
+      "lineCount": 19
     },
     {
-      "id": "app_page_tsx",
-      "label": "/",
-      "filePath": "app/page.tsx",
+      "id": "src_components_Button_tsx",
+      "label": "Button",
+      "filePath": "src/components/Button.tsx",
+      "layer": "shared",
+      "layerIndex": 2,
+      "layerLabel": "Shared / UI",
+      "apiCalls": [],
+      "routes": [],
+      "importCount": 2,
+      "lineCount": 33
+    },
+    {
+      "id": "src_components_Card_Card_tsx",
+      "label": "Card",
+      "filePath": "src/components/Card/Card.tsx",
+      "layer": "shared",
+      "layerIndex": 2,
+      "layerLabel": "Shared / UI",
+      "apiCalls": [],
+      "routes": [],
+      "importCount": 1,
+      "lineCount": 24
+    },
+    {
+      "id": "src_features_PostFeed_index_tsx",
+      "label": "PostFeed",
+      "filePath": "src/features/PostFeed/index.tsx",
+      "layer": "feature",
+      "layerIndex": 1,
+      "layerLabel": "Features",
+      "apiCalls": [],
+      "routes": [],
+      "importCount": 1,
+      "lineCount": 37
+    },
+    {
+      "id": "src_features_StatsPanel_tsx",
+      "label": "StatsPanel",
+      "filePath": "src/features/StatsPanel.tsx",
+      "layer": "feature",
+      "layerIndex": 1,
+      "layerLabel": "Features",
+      "apiCalls": [],
+      "routes": [],
+      "importCount": 1,
+      "lineCount": 49
+    },
+    {
+      "id": "src_features_UserList_tsx",
+      "label": "UserList",
+      "filePath": "src/features/UserList.tsx",
+      "layer": "feature",
+      "layerIndex": 1,
+      "layerLabel": "Features",
+      "apiCalls": [],
+      "routes": [],
+      "importCount": 2,
+      "lineCount": 56
+    },
+    {
+      "id": "src_hooks_useTracking_ts",
+      "label": "useTracking",
+      "filePath": "src/hooks/useTracking.ts",
+      "layer": "api_service",
+      "layerIndex": 3,
+      "layerLabel": "API Services",
+      "apiCalls": [
+        "http://localhost:8000/api/interaction"
+      ],
+      "routes": [],
+      "importCount": 5,
+      "lineCount": 117
+    },
+    {
+      "id": "src_main_tsx",
+      "label": "main",
+      "filePath": "src/main.tsx",
+      "layer": "shared",
+      "layerIndex": 2,
+      "layerLabel": "Shared / UI",
+      "apiCalls": [],
+      "routes": [],
+      "importCount": 0,
+      "lineCount": 13
+    },
+    {
+      "id": "src_pages_DashboardPage_tsx",
+      "label": "DashboardPage",
+      "filePath": "src/pages/DashboardPage.tsx",
       "layer": "page",
       "layerIndex": 0,
       "layerLabel": "Pages",
       "apiCalls": [],
-      "routes": [
-        "/"
-      ],
-      "importCount": 0
+      "routes": [],
+      "importCount": 1,
+      "lineCount": 22
     },
     {
-      "id": "app_phase__phraseId__page_tsx",
-      "label": "/phase/[phraseId]",
-      "filePath": "app/phase/[phraseId]/page.tsx",
+      "id": "src_pages_HomePage_tsx",
+      "label": "HomePage",
+      "filePath": "src/pages/HomePage.tsx",
       "layer": "page",
       "layerIndex": 0,
       "layerLabel": "Pages",
       "apiCalls": [],
-      "routes": [
-        "/phase/[phraseId]"
-      ],
-      "importCount": 0
+      "routes": [],
+      "importCount": 1,
+      "lineCount": 21
     },
     {
-      "id": "app_phase__phraseId__session__id__page_tsx",
-      "label": "/phase/[phraseId]/session/[id]",
-      "filePath": "app/phase/[phraseId]/session/[id]/page.tsx",
-      "layer": "page",
-      "layerIndex": 0,
-      "layerLabel": "Pages",
-      "apiCalls": [],
-      "routes": [
-        "/phase/[phraseId]/session/[id]"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_shadowing__id__page_tsx",
-      "label": "/shadowing/[id]",
-      "filePath": "app/shadowing/[id]/page.tsx",
-      "layer": "page",
-      "layerIndex": 0,
-      "layerLabel": "Pages",
-      "apiCalls": [],
-      "routes": [
-        "/shadowing/[id]"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_shadowing_page_tsx",
-      "label": "/shadowing",
-      "filePath": "app/shadowing/page.tsx",
-      "layer": "page",
-      "layerIndex": 0,
-      "layerLabel": "Pages",
-      "apiCalls": [],
-      "routes": [
-        "/shadowing"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_shadowing_script__id__page_tsx",
-      "label": "/shadowing/script/[id]",
-      "filePath": "app/shadowing/script/[id]/page.tsx",
-      "layer": "page",
-      "layerIndex": 0,
-      "layerLabel": "Pages",
-      "apiCalls": [],
-      "routes": [
-        "/shadowing/script/[id]"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_shadowing_script_page_tsx",
-      "label": "/shadowing/script",
-      "filePath": "app/shadowing/script/page.tsx",
-      "layer": "page",
-      "layerIndex": 0,
-      "layerLabel": "Pages",
-      "apiCalls": [],
-      "routes": [
-        "/shadowing/script"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_shadowing_youtube__id__page_tsx",
-      "label": "/shadowing/youtube/[id]",
-      "filePath": "app/shadowing/youtube/[id]/page.tsx",
-      "layer": "page",
-      "layerIndex": 0,
-      "layerLabel": "Pages",
-      "apiCalls": [],
-      "routes": [
-        "/shadowing/youtube/[id]"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "app_shadowing_youtube_page_tsx",
-      "label": "/shadowing/youtube",
-      "filePath": "app/shadowing/youtube/page.tsx",
-      "layer": "page",
-      "layerIndex": 0,
-      "layerLabel": "Pages",
-      "apiCalls": [],
-      "routes": [
-        "/shadowing/youtube"
-      ],
-      "importCount": 0
-    },
-    {
-      "id": "src_features_learning_LessonAssistant_tsx",
-      "label": "LessonAssistant",
-      "filePath": "src/features/learning/LessonAssistant.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
+      "id": "src_services_api_ts",
+      "label": "api",
+      "filePath": "src/services/api.ts",
+      "layer": "api_service",
+      "layerIndex": 3,
+      "layerLabel": "API Services",
       "apiCalls": [
-        "/api/ai"
+        "/users",
+        "/posts?_limit=5",
+        "/users/"
       ],
       "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_learning_PhraseDetailClient_tsx",
-      "label": "PhraseDetailClient",
-      "filePath": "src/features/learning/PhraseDetailClient.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_learning_PracticeCoach_tsx",
-      "label": "PracticeCoach",
-      "filePath": "src/features/learning/PracticeCoach.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_learning_PracticeCoachSubcomponents_tsx",
-      "label": "PracticeCoachSubcomponents",
-      "filePath": "src/features/learning/PracticeCoachSubcomponents.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_learning_SessionDetailClient_tsx",
-      "label": "SessionDetailClient",
-      "filePath": "src/features/learning/SessionDetailClient.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_learning_SessionHubClient_tsx",
-      "label": "SessionHubClient",
-      "filePath": "src/features/learning/SessionHubClient.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_learning_useCoachSession_ts",
-      "label": "useCoachSession",
-      "filePath": "src/features/learning/useCoachSession.ts",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [
-        "/api/coach"
-      ],
-      "routes": [],
-      "importCount": 2
-    },
-    {
-      "id": "src_features_shadowing_script_ScriptShadowingClient_tsx",
-      "label": "ScriptShadowingClient",
-      "filePath": "src/features/shadowing/script/ScriptShadowingClient.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_shadowing_script_ScriptShadowingHub_tsx",
-      "label": "ScriptShadowingHub",
-      "filePath": "src/features/shadowing/script/ScriptShadowingHub.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [
-        "/api/shadowing/sessions?mode=script",
-        "/api/shadowing/sessions",
-        "/api/shadowing/sessions/"
-      ],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_shadowing_script_components_CelebrationOverlay_tsx",
-      "label": "CelebrationOverlay",
-      "filePath": "src/features/shadowing/script/components/CelebrationOverlay.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_shadowing_script_components_ScriptInputForm_tsx",
-      "label": "ScriptInputForm",
-      "filePath": "src/features/shadowing/script/components/ScriptInputForm.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_shadowing_script_components_SentenceCard_tsx",
-      "label": "SentenceCard",
-      "filePath": "src/features/shadowing/script/components/SentenceCard.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_shadowing_script_components_SessionProgress_tsx",
-      "label": "SessionProgress",
-      "filePath": "src/features/shadowing/script/components/SessionProgress.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_shadowing_script_components_SessionTimer_tsx",
-      "label": "SessionTimer",
-      "filePath": "src/features/shadowing/script/components/SessionTimer.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_shadowing_script_hooks_useSessionTimer_ts",
-      "label": "useSessionTimer",
-      "filePath": "src/features/shadowing/script/hooks/useSessionTimer.ts",
-      "layer": "shared",
-      "layerIndex": 2,
-      "layerLabel": "Shared / UI",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_shadowing_script_useScriptShadowing_ts",
-      "label": "useScriptShadowing",
-      "filePath": "src/features/shadowing/script/useScriptShadowing.ts",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [
-        "/api/shadowing/script"
-      ],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_shadowing_shared_AudioReplay_tsx",
-      "label": "AudioReplay",
-      "filePath": "src/features/shadowing/shared/AudioReplay.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 2
-    },
-    {
-      "id": "src_features_shadowing_shared_ShadowingSessionClient_tsx",
-      "label": "ShadowingSessionClient",
-      "filePath": "src/features/shadowing/shared/ShadowingSessionClient.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [
-        "/api/shadowing/sessions/",
-        "/api/shadowing/sessions/",
-        "/api/shadowing/sessions/"
-      ],
-      "routes": [],
-      "importCount": 2
-    },
-    {
-      "id": "src_features_shadowing_shared_TTSSettingsPanel_tsx",
-      "label": "TTSSettingsPanel",
-      "filePath": "src/features/shadowing/shared/TTSSettingsPanel.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_shadowing_shared_VideoPanel_tsx",
-      "label": "VideoPanel",
-      "filePath": "src/features/shadowing/shared/VideoPanel.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_shadowing_shared_constants_ts",
-      "label": "constants",
-      "filePath": "src/features/shadowing/shared/constants.ts",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 3
-    },
-    {
-      "id": "src_features_shadowing_shared_types_ts",
-      "label": "types",
-      "filePath": "src/features/shadowing/shared/types.ts",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 9
-    },
-    {
-      "id": "src_features_shadowing_shared_useTTSSettings_ts",
-      "label": "useTTSSettings",
-      "filePath": "src/features/shadowing/shared/useTTSSettings.ts",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [
-        "/api/tts",
-        "/api/tts"
-      ],
-      "routes": [],
-      "importCount": 2
-    },
-    {
-      "id": "src_features_shadowing_shared_utils_ts",
-      "label": "utils",
-      "filePath": "src/features/shadowing/shared/utils.ts",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 6
-    },
-    {
-      "id": "src_features_shadowing_youtube_YouTubeShadowingClient_tsx",
-      "label": "YouTubeShadowingClient",
-      "filePath": "src/features/shadowing/youtube/YouTubeShadowingClient.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [
-        "/api/shadowing/youtube/raw-segments?videoId=",
-        "/api/shadowing/youtube/translate"
-      ],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_shadowing_youtube_YouTubeShadowingHub_tsx",
-      "label": "YouTubeShadowingHub",
-      "filePath": "src/features/shadowing/youtube/YouTubeShadowingHub.tsx",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [
-        "/api/shadowing/sessions?mode=youtube",
-        "/api/shadowing/youtube/usage",
-        "/api/shadowing/sessions",
-        "/api/shadowing/youtube/transcript",
-        "/api/shadowing/sessions/",
-        "/api/shadowing/sessions/"
-      ],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_features_shadowing_youtube_transcriptTimeline_ts",
-      "label": "transcriptTimeline",
-      "filePath": "src/features/shadowing/youtube/transcriptTimeline.ts",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 2
-    },
-    {
-      "id": "src_features_shadowing_youtube_useYouTubeShadowing_ts",
-      "label": "useYouTubeShadowing",
-      "filePath": "src/features/shadowing/youtube/useYouTubeShadowing.ts",
-      "layer": "feature",
-      "layerIndex": 1,
-      "layerLabel": "Features",
-      "apiCalls": [
-        "/api/transcript"
-      ],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_hooks_useSoniox_ts",
-      "label": "useSoniox",
-      "filePath": "src/hooks/useSoniox.ts",
-      "layer": "shared",
-      "layerIndex": 2,
-      "layerLabel": "Shared / UI",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 2
-    },
-    {
-      "id": "src_lib_cache_ts",
-      "label": "cache",
-      "filePath": "src/lib/cache.ts",
-      "layer": "shared",
-      "layerIndex": 2,
-      "layerLabel": "Shared / UI",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 8
-    },
-    {
-      "id": "src_lib_db_ts",
-      "label": "db",
-      "filePath": "src/lib/db.ts",
-      "layer": "shared",
-      "layerIndex": 2,
-      "layerLabel": "Shared / UI",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 2
-    },
-    {
-      "id": "src_lib_schema_ts",
-      "label": "schema",
-      "filePath": "src/lib/schema.ts",
-      "layer": "shared",
-      "layerIndex": 2,
-      "layerLabel": "Shared / UI",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 3
-    },
-    {
-      "id": "src_lib_transcriptCleaner_ts",
-      "label": "transcriptCleaner",
-      "filePath": "src/lib/transcriptCleaner.ts",
-      "layer": "shared",
-      "layerIndex": 2,
-      "layerLabel": "Shared / UI",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_store_useProgressStore_ts",
-      "label": "useProgressStore",
-      "filePath": "src/store/useProgressStore.ts",
-      "layer": "shared",
-      "layerIndex": 2,
-      "layerLabel": "Shared / UI",
-      "apiCalls": [
-        "/api/progress",
-        "/api/progress"
-      ],
-      "routes": [],
-      "importCount": 3
-    },
-    {
-      "id": "src_types_ai_ts",
-      "label": "ai",
-      "filePath": "src/types/ai.ts",
-      "layer": "shared",
-      "layerIndex": 2,
-      "layerLabel": "Shared / UI",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
-    },
-    {
-      "id": "src_types_index_ts",
-      "label": "types",
-      "filePath": "src/types/index.ts",
-      "layer": "shared",
-      "layerIndex": 2,
-      "layerLabel": "Shared / UI",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 1
+      "importCount": 2,
+      "lineCount": 21
     },
     {
       "id": "api_ep_0",
-      "label": "/api/ai",
+      "label": "/posts?_limit=5",
       "filePath": null,
       "layer": "api_endpoint",
       "layerIndex": 4,
       "layerLabel": "Backend API Endpoints",
       "apiCalls": [],
       "routes": [],
-      "importCount": 0
+      "importCount": 0,
+      "lineCount": 0
     },
     {
       "id": "api_ep_1",
-      "label": "/api/coach",
+      "label": "/users",
       "filePath": null,
       "layer": "api_endpoint",
       "layerIndex": 4,
       "layerLabel": "Backend API Endpoints",
       "apiCalls": [],
       "routes": [],
-      "importCount": 0
+      "importCount": 0,
+      "lineCount": 0
     },
     {
       "id": "api_ep_2",
-      "label": "/api/progress",
+      "label": "/users/",
       "filePath": null,
       "layer": "api_endpoint",
       "layerIndex": 4,
       "layerLabel": "Backend API Endpoints",
       "apiCalls": [],
       "routes": [],
-      "importCount": 0
+      "importCount": 0,
+      "lineCount": 0
     },
     {
       "id": "api_ep_3",
-      "label": "/api/shadowing/script",
+      "label": "http://localhost:8000/api/interaction",
       "filePath": null,
       "layer": "api_endpoint",
       "layerIndex": 4,
       "layerLabel": "Backend API Endpoints",
       "apiCalls": [],
       "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_4",
-      "label": "/api/shadowing/sessions",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_5",
-      "label": "/api/shadowing/sessions/",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_6",
-      "label": "/api/shadowing/sessions/[id]",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_7",
-      "label": "/api/shadowing/sessions?mode=script",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_8",
-      "label": "/api/shadowing/sessions?mode=youtube",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_9",
-      "label": "/api/shadowing/youtube/raw-segments",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_10",
-      "label": "/api/shadowing/youtube/raw-segments?videoId=",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_11",
-      "label": "/api/shadowing/youtube/transcript",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_12",
-      "label": "/api/shadowing/youtube/translate",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_13",
-      "label": "/api/shadowing/youtube/usage",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_14",
-      "label": "/api/transcript",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_15",
-      "label": "/api/tts",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_16",
-      "label": "/api/voice",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_17",
-      "label": "/transcript",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_18",
-      "label": "/transcript/",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
-    },
-    {
-      "id": "api_ep_19",
-      "label": "https://texttospeech.googleapis.com/v1/text:synthesize?key=",
-      "filePath": null,
-      "layer": "api_endpoint",
-      "layerIndex": 4,
-      "layerLabel": "Backend API Endpoints",
-      "apiCalls": [],
-      "routes": [],
-      "importCount": 0
+      "importCount": 0,
+      "lineCount": 0
     }
   ],
   "edges": [
     {
-      "id": "e_app_api_coach_route_ts__app_lib_googleTtsClient_ts",
-      "source": "app_api_coach_route_ts",
-      "target": "app_lib_googleTtsClient_ts"
+      "id": "e_src_App_tsx__src_pages_HomePage_tsx",
+      "source": "src_App_tsx",
+      "target": "src_pages_HomePage_tsx"
     },
     {
-      "id": "e_app_api_progress_route_ts__src_lib_db_ts",
-      "source": "app_api_progress_route_ts",
-      "target": "src_lib_db_ts"
+      "id": "e_src_App_tsx__src_pages_DashboardPage_tsx",
+      "source": "src_App_tsx",
+      "target": "src_pages_DashboardPage_tsx"
     },
     {
-      "id": "e_app_api_progress_route_ts__src_lib_schema_ts",
-      "source": "app_api_progress_route_ts",
-      "target": "src_lib_schema_ts"
+      "id": "e_src_features_PostFeed_index_tsx__src_hooks_useTracking_ts",
+      "source": "src_features_PostFeed_index_tsx",
+      "target": "src_hooks_useTracking_ts"
     },
     {
-      "id": "e_app_api_shadowing_script_route_ts__src_lib_cache_ts",
-      "source": "app_api_shadowing_script_route_ts",
-      "target": "src_lib_cache_ts"
+      "id": "e_src_features_PostFeed_index_tsx__src_services_api_ts",
+      "source": "src_features_PostFeed_index_tsx",
+      "target": "src_services_api_ts"
     },
     {
-      "id": "e_app_api_shadowing_sessions__id__route_ts__src_lib_cache_ts",
-      "source": "app_api_shadowing_sessions__id__route_ts",
-      "target": "src_lib_cache_ts"
+      "id": "e_src_features_PostFeed_index_tsx__src_components_Card_Card_tsx",
+      "source": "src_features_PostFeed_index_tsx",
+      "target": "src_components_Card_Card_tsx"
     },
     {
-      "id": "e_app_api_shadowing_sessions__id__route_ts__src_features_shadowing_youtube_transcriptTimeline_ts",
-      "source": "app_api_shadowing_sessions__id__route_ts",
-      "target": "src_features_shadowing_youtube_transcriptTimeline_ts"
+      "id": "e_src_features_StatsPanel_tsx__src_hooks_useTracking_ts",
+      "source": "src_features_StatsPanel_tsx",
+      "target": "src_hooks_useTracking_ts"
     },
     {
-      "id": "e_app_api_shadowing_sessions_route_ts__src_lib_cache_ts",
-      "source": "app_api_shadowing_sessions_route_ts",
-      "target": "src_lib_cache_ts"
+      "id": "e_src_features_StatsPanel_tsx__src_components_Button_tsx",
+      "source": "src_features_StatsPanel_tsx",
+      "target": "src_components_Button_tsx"
     },
     {
-      "id": "e_app_api_shadowing_youtube_raw_segments_route_ts__src_lib_cache_ts",
-      "source": "app_api_shadowing_youtube_raw_segments_route_ts",
-      "target": "src_lib_cache_ts"
+      "id": "e_src_features_UserList_tsx__src_hooks_useTracking_ts",
+      "source": "src_features_UserList_tsx",
+      "target": "src_hooks_useTracking_ts"
     },
     {
-      "id": "e_app_api_shadowing_youtube_raw_segments_route_ts__src_features_shadowing_shared_utils_ts",
-      "source": "app_api_shadowing_youtube_raw_segments_route_ts",
-      "target": "src_features_shadowing_shared_utils_ts"
+      "id": "e_src_features_UserList_tsx__src_services_api_ts",
+      "source": "src_features_UserList_tsx",
+      "target": "src_services_api_ts"
     },
     {
-      "id": "e_app_api_shadowing_youtube_transcript_route_ts__src_lib_cache_ts",
-      "source": "app_api_shadowing_youtube_transcript_route_ts",
-      "target": "src_lib_cache_ts"
+      "id": "e_src_features_UserList_tsx__src_components_Card_Card_tsx",
+      "source": "src_features_UserList_tsx",
+      "target": "src_components_Card_Card_tsx"
     },
     {
-      "id": "e_app_api_shadowing_youtube_transcript_route_ts__src_features_shadowing_shared_utils_ts",
-      "source": "app_api_shadowing_youtube_transcript_route_ts",
-      "target": "src_features_shadowing_shared_utils_ts"
+      "id": "e_src_features_UserList_tsx__src_components_Button_tsx",
+      "source": "src_features_UserList_tsx",
+      "target": "src_components_Button_tsx"
     },
     {
-      "id": "e_app_api_shadowing_youtube_usage_route_ts__src_lib_cache_ts",
-      "source": "app_api_shadowing_youtube_usage_route_ts",
-      "target": "src_lib_cache_ts"
+      "id": "e_src_main_tsx__src_App_tsx",
+      "source": "src_main_tsx",
+      "target": "src_App_tsx"
     },
     {
-      "id": "e_app_api_transcript_route_ts__src_lib_transcriptCleaner_ts",
-      "source": "app_api_transcript_route_ts",
-      "target": "src_lib_transcriptCleaner_ts"
+      "id": "e_src_pages_DashboardPage_tsx__src_hooks_useTracking_ts",
+      "source": "src_pages_DashboardPage_tsx",
+      "target": "src_hooks_useTracking_ts"
     },
     {
-      "id": "e_app_api_tts_route_ts__app_lib_googleTtsClient_ts",
-      "source": "app_api_tts_route_ts",
-      "target": "app_lib_googleTtsClient_ts"
+      "id": "e_src_pages_DashboardPage_tsx__src_features_StatsPanel_tsx",
+      "source": "src_pages_DashboardPage_tsx",
+      "target": "src_features_StatsPanel_tsx"
     },
     {
-      "id": "e_app_api_tts_route_ts__src_lib_cache_ts",
-      "source": "app_api_tts_route_ts",
-      "target": "src_lib_cache_ts"
+      "id": "e_src_pages_DashboardPage_tsx__src_features_UserList_tsx",
+      "source": "src_pages_DashboardPage_tsx",
+      "target": "src_features_UserList_tsx"
     },
     {
-      "id": "e_app_page_tsx__src_features_learning_SessionHubClient_tsx",
-      "source": "app_page_tsx",
-      "target": "src_features_learning_SessionHubClient_tsx"
+      "id": "e_src_pages_HomePage_tsx__src_hooks_useTracking_ts",
+      "source": "src_pages_HomePage_tsx",
+      "target": "src_hooks_useTracking_ts"
     },
     {
-      "id": "e_app_phase__phraseId__page_tsx__src_features_learning_PhraseDetailClient_tsx",
-      "source": "app_phase__phraseId__page_tsx",
-      "target": "src_features_learning_PhraseDetailClient_tsx"
+      "id": "e_src_pages_HomePage_tsx__src_features_UserList_tsx",
+      "source": "src_pages_HomePage_tsx",
+      "target": "src_features_UserList_tsx"
     },
     {
-      "id": "e_app_phase__phraseId__session__id__page_tsx__src_features_learning_SessionDetailClient_tsx",
-      "source": "app_phase__phraseId__session__id__page_tsx",
-      "target": "src_features_learning_SessionDetailClient_tsx"
+      "id": "e_src_pages_HomePage_tsx__src_features_PostFeed_index_tsx",
+      "source": "src_pages_HomePage_tsx",
+      "target": "src_features_PostFeed_index_tsx"
     },
     {
-      "id": "e_app_shadowing__id__page_tsx__src_lib_cache_ts",
-      "source": "app_shadowing__id__page_tsx",
-      "target": "src_lib_cache_ts"
-    },
-    {
-      "id": "e_app_shadowing_script__id__page_tsx__src_features_shadowing_shared_ShadowingSessionClient_tsx",
-      "source": "app_shadowing_script__id__page_tsx",
-      "target": "src_features_shadowing_shared_ShadowingSessionClient_tsx"
-    },
-    {
-      "id": "e_app_shadowing_script_page_tsx__src_features_shadowing_script_ScriptShadowingHub_tsx",
-      "source": "app_shadowing_script_page_tsx",
-      "target": "src_features_shadowing_script_ScriptShadowingHub_tsx"
-    },
-    {
-      "id": "e_app_shadowing_youtube__id__page_tsx__src_features_shadowing_shared_ShadowingSessionClient_tsx",
-      "source": "app_shadowing_youtube__id__page_tsx",
-      "target": "src_features_shadowing_shared_ShadowingSessionClient_tsx"
-    },
-    {
-      "id": "e_app_shadowing_youtube_page_tsx__src_features_shadowing_youtube_YouTubeShadowingHub_tsx",
-      "source": "app_shadowing_youtube_page_tsx",
-      "target": "src_features_shadowing_youtube_YouTubeShadowingHub_tsx"
-    },
-    {
-      "id": "e_src_features_learning_LessonAssistant_tsx__src_types_ai_ts",
-      "source": "src_features_learning_LessonAssistant_tsx",
-      "target": "src_types_ai_ts"
-    },
-    {
-      "id": "e_src_features_learning_PhraseDetailClient_tsx__src_store_useProgressStore_ts",
-      "source": "src_features_learning_PhraseDetailClient_tsx",
-      "target": "src_store_useProgressStore_ts"
-    },
-    {
-      "id": "e_src_features_learning_PracticeCoach_tsx__src_hooks_useSoniox_ts",
-      "source": "src_features_learning_PracticeCoach_tsx",
-      "target": "src_hooks_useSoniox_ts"
-    },
-    {
-      "id": "e_src_features_learning_PracticeCoach_tsx__src_features_learning_useCoachSession_ts",
-      "source": "src_features_learning_PracticeCoach_tsx",
-      "target": "src_features_learning_useCoachSession_ts"
-    },
-    {
-      "id": "e_src_features_learning_PracticeCoach_tsx__src_features_learning_PracticeCoachSubcomponents_tsx",
-      "source": "src_features_learning_PracticeCoach_tsx",
-      "target": "src_features_learning_PracticeCoachSubcomponents_tsx"
-    },
-    {
-      "id": "e_src_features_learning_PracticeCoachSubcomponents_tsx__src_features_learning_useCoachSession_ts",
-      "source": "src_features_learning_PracticeCoachSubcomponents_tsx",
-      "target": "src_features_learning_useCoachSession_ts"
-    },
-    {
-      "id": "e_src_features_learning_SessionDetailClient_tsx__src_store_useProgressStore_ts",
-      "source": "src_features_learning_SessionDetailClient_tsx",
-      "target": "src_store_useProgressStore_ts"
-    },
-    {
-      "id": "e_src_features_learning_SessionDetailClient_tsx__src_types_index_ts",
-      "source": "src_features_learning_SessionDetailClient_tsx",
-      "target": "src_types_index_ts"
-    },
-    {
-      "id": "e_src_features_learning_SessionDetailClient_tsx__src_features_learning_LessonAssistant_tsx",
-      "source": "src_features_learning_SessionDetailClient_tsx",
-      "target": "src_features_learning_LessonAssistant_tsx"
-    },
-    {
-      "id": "e_src_features_learning_SessionDetailClient_tsx__src_features_learning_PracticeCoach_tsx",
-      "source": "src_features_learning_SessionDetailClient_tsx",
-      "target": "src_features_learning_PracticeCoach_tsx"
-    },
-    {
-      "id": "e_src_features_learning_SessionHubClient_tsx__src_store_useProgressStore_ts",
-      "source": "src_features_learning_SessionHubClient_tsx",
-      "target": "src_store_useProgressStore_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_script_ScriptShadowingClient_tsx__src_features_shadowing_script_useScriptShadowing_ts",
-      "source": "src_features_shadowing_script_ScriptShadowingClient_tsx",
-      "target": "src_features_shadowing_script_useScriptShadowing_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_script_ScriptShadowingClient_tsx__src_features_shadowing_shared_TTSSettingsPanel_tsx",
-      "source": "src_features_shadowing_script_ScriptShadowingClient_tsx",
-      "target": "src_features_shadowing_shared_TTSSettingsPanel_tsx"
-    },
-    {
-      "id": "e_src_features_shadowing_script_ScriptShadowingClient_tsx__src_features_shadowing_script_components_ScriptInputForm_tsx",
-      "source": "src_features_shadowing_script_ScriptShadowingClient_tsx",
-      "target": "src_features_shadowing_script_components_ScriptInputForm_tsx"
-    },
-    {
-      "id": "e_src_features_shadowing_script_ScriptShadowingClient_tsx__src_features_shadowing_script_components_SessionProgress_tsx",
-      "source": "src_features_shadowing_script_ScriptShadowingClient_tsx",
-      "target": "src_features_shadowing_script_components_SessionProgress_tsx"
-    },
-    {
-      "id": "e_src_features_shadowing_script_ScriptShadowingClient_tsx__src_features_shadowing_script_components_SentenceCard_tsx",
-      "source": "src_features_shadowing_script_ScriptShadowingClient_tsx",
-      "target": "src_features_shadowing_script_components_SentenceCard_tsx"
-    },
-    {
-      "id": "e_src_features_shadowing_script_ScriptShadowingClient_tsx__src_features_shadowing_script_components_SessionTimer_tsx",
-      "source": "src_features_shadowing_script_ScriptShadowingClient_tsx",
-      "target": "src_features_shadowing_script_components_SessionTimer_tsx"
-    },
-    {
-      "id": "e_src_features_shadowing_script_ScriptShadowingClient_tsx__src_features_shadowing_script_components_CelebrationOverlay_tsx",
-      "source": "src_features_shadowing_script_ScriptShadowingClient_tsx",
-      "target": "src_features_shadowing_script_components_CelebrationOverlay_tsx"
-    },
-    {
-      "id": "e_src_features_shadowing_script_ScriptShadowingClient_tsx__src_features_shadowing_shared_types_ts",
-      "source": "src_features_shadowing_script_ScriptShadowingClient_tsx",
-      "target": "src_features_shadowing_shared_types_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_script_components_SentenceCard_tsx__src_features_shadowing_shared_AudioReplay_tsx",
-      "source": "src_features_shadowing_script_components_SentenceCard_tsx",
-      "target": "src_features_shadowing_shared_AudioReplay_tsx"
-    },
-    {
-      "id": "e_src_features_shadowing_script_components_SentenceCard_tsx__src_features_shadowing_shared_useTTSSettings_ts",
-      "source": "src_features_shadowing_script_components_SentenceCard_tsx",
-      "target": "src_features_shadowing_shared_useTTSSettings_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_script_components_SessionTimer_tsx__src_features_shadowing_script_hooks_useSessionTimer_ts",
-      "source": "src_features_shadowing_script_components_SessionTimer_tsx",
-      "target": "src_features_shadowing_script_hooks_useSessionTimer_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_script_useScriptShadowing_ts__src_hooks_useSoniox_ts",
-      "source": "src_features_shadowing_script_useScriptShadowing_ts",
-      "target": "src_hooks_useSoniox_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_script_useScriptShadowing_ts__src_features_shadowing_shared_useTTSSettings_ts",
-      "source": "src_features_shadowing_script_useScriptShadowing_ts",
-      "target": "src_features_shadowing_shared_useTTSSettings_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_script_useScriptShadowing_ts__src_features_shadowing_shared_types_ts",
-      "source": "src_features_shadowing_script_useScriptShadowing_ts",
-      "target": "src_features_shadowing_shared_types_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_script_useScriptShadowing_ts__src_features_shadowing_shared_utils_ts",
-      "source": "src_features_shadowing_script_useScriptShadowing_ts",
-      "target": "src_features_shadowing_shared_utils_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_script_useScriptShadowing_ts__src_features_shadowing_shared_constants_ts",
-      "source": "src_features_shadowing_script_useScriptShadowing_ts",
-      "target": "src_features_shadowing_shared_constants_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_shared_ShadowingSessionClient_tsx__src_features_shadowing_youtube_YouTubeShadowingClient_tsx",
-      "source": "src_features_shadowing_shared_ShadowingSessionClient_tsx",
-      "target": "src_features_shadowing_youtube_YouTubeShadowingClient_tsx"
-    },
-    {
-      "id": "e_src_features_shadowing_shared_ShadowingSessionClient_tsx__src_features_shadowing_script_ScriptShadowingClient_tsx",
-      "source": "src_features_shadowing_shared_ShadowingSessionClient_tsx",
-      "target": "src_features_shadowing_script_ScriptShadowingClient_tsx"
-    },
-    {
-      "id": "e_src_features_shadowing_shared_TTSSettingsPanel_tsx__src_features_shadowing_shared_types_ts",
-      "source": "src_features_shadowing_shared_TTSSettingsPanel_tsx",
-      "target": "src_features_shadowing_shared_types_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_shared_TTSSettingsPanel_tsx__src_features_shadowing_shared_constants_ts",
-      "source": "src_features_shadowing_shared_TTSSettingsPanel_tsx",
-      "target": "src_features_shadowing_shared_constants_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_shared_VideoPanel_tsx__src_features_shadowing_shared_types_ts",
-      "source": "src_features_shadowing_shared_VideoPanel_tsx",
-      "target": "src_features_shadowing_shared_types_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_shared_VideoPanel_tsx__src_features_shadowing_shared_utils_ts",
-      "source": "src_features_shadowing_shared_VideoPanel_tsx",
-      "target": "src_features_shadowing_shared_utils_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_shared_useTTSSettings_ts__src_features_shadowing_shared_types_ts",
-      "source": "src_features_shadowing_shared_useTTSSettings_ts",
-      "target": "src_features_shadowing_shared_types_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_shared_useTTSSettings_ts__src_features_shadowing_shared_constants_ts",
-      "source": "src_features_shadowing_shared_useTTSSettings_ts",
-      "target": "src_features_shadowing_shared_constants_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_shared_utils_ts__src_features_shadowing_shared_types_ts",
-      "source": "src_features_shadowing_shared_utils_ts",
-      "target": "src_features_shadowing_shared_types_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingClient_tsx__src_features_shadowing_youtube_useYouTubeShadowing_ts",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingClient_tsx",
-      "target": "src_features_shadowing_youtube_useYouTubeShadowing_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingClient_tsx__src_features_shadowing_youtube_transcriptTimeline_ts",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingClient_tsx",
-      "target": "src_features_shadowing_youtube_transcriptTimeline_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingClient_tsx__src_features_shadowing_shared_VideoPanel_tsx",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingClient_tsx",
-      "target": "src_features_shadowing_shared_VideoPanel_tsx"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingClient_tsx__src_features_shadowing_shared_AudioReplay_tsx",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingClient_tsx",
-      "target": "src_features_shadowing_shared_AudioReplay_tsx"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingClient_tsx__src_features_shadowing_shared_types_ts",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingClient_tsx",
-      "target": "src_features_shadowing_shared_types_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingClient_tsx__src_features_shadowing_shared_utils_ts",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingClient_tsx",
-      "target": "src_features_shadowing_shared_utils_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingHub_tsx__src_features_shadowing_shared_utils_ts",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingHub_tsx",
-      "target": "src_features_shadowing_shared_utils_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_transcriptTimeline_ts__src_features_shadowing_shared_types_ts",
-      "source": "src_features_shadowing_youtube_transcriptTimeline_ts",
-      "target": "src_features_shadowing_shared_types_ts"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_useYouTubeShadowing_ts__src_features_shadowing_shared_types_ts",
-      "source": "src_features_shadowing_youtube_useYouTubeShadowing_ts",
-      "target": "src_features_shadowing_shared_types_ts"
-    },
-    {
-      "id": "e_src_lib_cache_ts__src_lib_db_ts",
-      "source": "src_lib_cache_ts",
-      "target": "src_lib_db_ts"
-    },
-    {
-      "id": "e_src_lib_cache_ts__src_lib_schema_ts",
-      "source": "src_lib_cache_ts",
-      "target": "src_lib_schema_ts"
-    },
-    {
-      "id": "e_src_lib_db_ts__src_lib_schema_ts",
-      "source": "src_lib_db_ts",
-      "target": "src_lib_schema_ts"
-    },
-    {
-      "id": "e_src_features_learning_LessonAssistant_tsx__api_ep_0",
-      "source": "src_features_learning_LessonAssistant_tsx",
+      "id": "e_src_services_api_ts__api_ep_0",
+      "source": "src_services_api_ts",
       "target": "api_ep_0"
     },
     {
-      "id": "e_src_features_learning_useCoachSession_ts__api_ep_1",
-      "source": "src_features_learning_useCoachSession_ts",
+      "id": "e_src_services_api_ts__api_ep_1",
+      "source": "src_services_api_ts",
       "target": "api_ep_1"
     },
     {
-      "id": "e_src_store_useProgressStore_ts__api_ep_2",
-      "source": "src_store_useProgressStore_ts",
+      "id": "e_src_services_api_ts__api_ep_2",
+      "source": "src_services_api_ts",
       "target": "api_ep_2"
     },
     {
-      "id": "e_src_features_shadowing_script_useScriptShadowing_ts__api_ep_3",
-      "source": "src_features_shadowing_script_useScriptShadowing_ts",
+      "id": "e_src_hooks_useTracking_ts__api_ep_3",
+      "source": "src_hooks_useTracking_ts",
       "target": "api_ep_3"
-    },
-    {
-      "id": "e_src_features_shadowing_script_ScriptShadowingHub_tsx__api_ep_4",
-      "source": "src_features_shadowing_script_ScriptShadowingHub_tsx",
-      "target": "api_ep_4"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingHub_tsx__api_ep_4",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingHub_tsx",
-      "target": "api_ep_4"
-    },
-    {
-      "id": "e_src_features_shadowing_script_ScriptShadowingHub_tsx__api_ep_5",
-      "source": "src_features_shadowing_script_ScriptShadowingHub_tsx",
-      "target": "api_ep_5"
-    },
-    {
-      "id": "e_src_features_shadowing_shared_ShadowingSessionClient_tsx__api_ep_5",
-      "source": "src_features_shadowing_shared_ShadowingSessionClient_tsx",
-      "target": "api_ep_5"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingHub_tsx__api_ep_5",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingHub_tsx",
-      "target": "api_ep_5"
-    },
-    {
-      "id": "e_src_features_shadowing_script_ScriptShadowingHub_tsx__api_ep_7",
-      "source": "src_features_shadowing_script_ScriptShadowingHub_tsx",
-      "target": "api_ep_7"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingHub_tsx__api_ep_8",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingHub_tsx",
-      "target": "api_ep_8"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingClient_tsx__api_ep_10",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingClient_tsx",
-      "target": "api_ep_10"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingHub_tsx__api_ep_11",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingHub_tsx",
-      "target": "api_ep_11"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingClient_tsx__api_ep_12",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingClient_tsx",
-      "target": "api_ep_12"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_YouTubeShadowingHub_tsx__api_ep_13",
-      "source": "src_features_shadowing_youtube_YouTubeShadowingHub_tsx",
-      "target": "api_ep_13"
-    },
-    {
-      "id": "e_src_features_shadowing_youtube_useYouTubeShadowing_ts__api_ep_14",
-      "source": "src_features_shadowing_youtube_useYouTubeShadowing_ts",
-      "target": "api_ep_14"
-    },
-    {
-      "id": "e_src_features_shadowing_shared_useTTSSettings_ts__api_ep_15",
-      "source": "src_features_shadowing_shared_useTTSSettings_ts",
-      "target": "api_ep_15"
-    },
-    {
-      "id": "e_app_api_shadowing_youtube_transcript_route_ts__api_ep_17",
-      "source": "app_api_shadowing_youtube_transcript_route_ts",
-      "target": "api_ep_17"
-    },
-    {
-      "id": "e_app_api_shadowing_youtube_transcript_route_ts__api_ep_18",
-      "source": "app_api_shadowing_youtube_transcript_route_ts",
-      "target": "api_ep_18"
-    },
-    {
-      "id": "e_app_lib_googleTtsClient_ts__api_ep_19",
-      "source": "app_lib_googleTtsClient_ts",
-      "target": "api_ep_19"
     }
   ],
   "groups": [
     {
-      "parentId": "app_page_tsx",
+      "parentId": "src_pages_DashboardPage_tsx",
       "childIds": [
-        "src_features_learning_SessionHubClient_tsx"
+        "src_features_StatsPanel_tsx",
+        "src_features_UserList_tsx"
       ]
     },
     {
-      "parentId": "app_phase__phraseId__page_tsx",
+      "parentId": "src_pages_HomePage_tsx",
       "childIds": [
-        "src_features_learning_PhraseDetailClient_tsx"
-      ]
-    },
-    {
-      "parentId": "app_phase__phraseId__session__id__page_tsx",
-      "childIds": [
-        "src_features_learning_SessionDetailClient_tsx"
-      ]
-    },
-    {
-      "parentId": "app_shadowing__id__page_tsx",
-      "childIds": []
-    },
-    {
-      "parentId": "app_shadowing_page_tsx",
-      "childIds": []
-    },
-    {
-      "parentId": "app_shadowing_script__id__page_tsx",
-      "childIds": [
-        "src_features_shadowing_shared_ShadowingSessionClient_tsx"
-      ]
-    },
-    {
-      "parentId": "app_shadowing_script_page_tsx",
-      "childIds": [
-        "src_features_shadowing_script_ScriptShadowingHub_tsx"
-      ]
-    },
-    {
-      "parentId": "app_shadowing_youtube__id__page_tsx",
-      "childIds": [
-        "src_features_shadowing_shared_ShadowingSessionClient_tsx"
-      ]
-    },
-    {
-      "parentId": "app_shadowing_youtube_page_tsx",
-      "childIds": [
-        "src_features_shadowing_youtube_YouTubeShadowingHub_tsx"
+        "src_features_UserList_tsx",
+        "src_features_PostFeed_index_tsx"
       ]
     }
   ],
   "metadata": {
-    "totalFiles": 67,
-    "analyzedFiles": 59,
-    "treeShakedFiles": 8,
-    "barrelFiles": 0,
-    "totalEdges": 91,
-    "apiEndpoints": 20,
-    "framework": "nextjs"
+    "totalFiles": 12,
+    "analyzedFiles": 12,
+    "treeShakedFiles": 0,
+    "barrelFiles": 1,
+    "totalEdges": 22,
+    "apiEndpoints": 4,
+    "framework": "react"
+  },
+  "analytics": {
+    "circularDeps": [],
+    "deadFiles": [],
+    "dependents": {
+      "src_components_Button_tsx": [
+        "src_features_UserList_tsx",
+        "src_features_StatsPanel_tsx"
+      ],
+      "src_hooks_useTracking_ts": [
+        "src_features_UserList_tsx",
+        "src_pages_DashboardPage_tsx",
+        "src_features_StatsPanel_tsx",
+        "src_pages_HomePage_tsx",
+        "src_features_PostFeed_index_tsx"
+      ],
+      "src_App_tsx": [
+        "src_main_tsx"
+      ],
+      "api_ep_0": [
+        "src_services_api_ts"
+      ],
+      "src_features_StatsPanel_tsx": [
+        "src_pages_DashboardPage_tsx"
+      ],
+      "src_features_UserList_tsx": [
+        "src_pages_HomePage_tsx",
+        "src_pages_DashboardPage_tsx"
+      ],
+      "src_pages_DashboardPage_tsx": [
+        "src_App_tsx"
+      ],
+      "api_ep_2": [
+        "src_services_api_ts"
+      ],
+      "src_pages_HomePage_tsx": [
+        "src_App_tsx"
+      ],
+      "src_components_Card_Card_tsx": [
+        "src_features_PostFeed_index_tsx",
+        "src_features_UserList_tsx"
+      ],
+      "src_features_PostFeed_index_tsx": [
+        "src_pages_HomePage_tsx"
+      ],
+      "src_services_api_ts": [
+        "src_features_PostFeed_index_tsx",
+        "src_features_UserList_tsx"
+      ],
+      "api_ep_3": [
+        "src_hooks_useTracking_ts"
+      ],
+      "api_ep_1": [
+        "src_services_api_ts"
+      ]
+    }
   }
 }

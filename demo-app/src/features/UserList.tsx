@@ -39,7 +39,10 @@ export default function UserList() {
   return (
     <div>
       <h2>Users</h2>
-      <Button label={loading ? "Loading..." : "Refresh Users"} onClick={loadUsers} />
+      <Button
+        label={loading ? "Loading..." : "Refresh Users"}
+        onClick={loadUsers}
+      />
       <div style={{ marginTop: 12 }}>
         {users.map((u) => (
           <Card key={u.id} title={u.name}>

@@ -71,7 +71,7 @@ function sendEvent(event: {
  */
 export function useTracking(
   componentName: string,
-  options?: { filePath?: string; route?: string }
+  options?: { filePath?: string; route?: string },
 ) {
   const nameRef = useRef(componentName);
   nameRef.current = componentName;
@@ -94,29 +94,23 @@ export function useTracking(
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const trackClick = useCallback(
-    (action?: string) => {
-      sendEvent({
-        eventType: "click",
-        componentName: nameRef.current,
-        route: window.location.pathname,
-        metadata: action ? { action } : undefined,
-      });
-    },
-    []
-  );
+  const trackClick = useCallback((action?: string) => {
+    sendEvent({
+      eventType: "click",
+      componentName: nameRef.current,
+      route: window.location.pathname,
+      metadata: action ? { action } : undefined,
+    });
+  }, []);
 
-  const trackApiCall = useCallback(
-    (endpoint: string) => {
-      sendEvent({
-        eventType: "api_call",
-        componentName: nameRef.current,
-        route: window.location.pathname,
-        metadata: { endpoint },
-      });
-    },
-    []
-  );
+  const trackApiCall = useCallback((endpoint: string) => {
+    sendEvent({
+      eventType: "api_call",
+      componentName: nameRef.current,
+      route: window.location.pathname,
+      metadata: { endpoint },
+    });
+  }, []);
 
   return { trackClick, trackApiCall };
 }

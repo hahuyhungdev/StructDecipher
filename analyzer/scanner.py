@@ -259,12 +259,15 @@ def scan_file(filepath: Path) -> dict:
         if lines and all(l.startswith("export ") for l in lines):
             is_barrel = True
 
+    line_count = len(content.split("\n"))
+
     return {
         "imports": imports,
         "api_calls": api_calls,
         "routes": routes,
         "export_default": has_default,
         "is_barrel": is_barrel,
+        "line_count": line_count,
     }
 
 
@@ -626,6 +629,9 @@ def _scan_monorepo(root: Path, packages: list[Path]) -> dict:
     all_nodes: list[dict] = []
     all_edges: list[dict] = []
     all_groups: list[dict] = []
+    all_circular_deps: list[list[str]] = []
+    all_dead_files: list[dict] = []
+    all_dependents: dict[str, list[str]] = {}
     total_files = 0
     analyzed_files = 0
     tree_shaked = 0
@@ -667,6 +673,19 @@ def _scan_monorepo(root: Path, packages: list[Path]) -> dict:
             group["childIds"] = [id_map.get(c, c) for c in group["childIds"]]
             all_groups.append(group)
 
+        # Merge analytics
+        pkg_analytics = result.get("analytics", {})
+        for cycle in pkg_analytics.get("circularDeps", []):
+            all_circular_deps.append([id_map.get(c, c) for c in cycle])
+        for df in pkg_analytics.get("deadFiles", []):
+            df_copy = dict(df)
+            df_copy["filePath"] = f"{pkg_name}/{df_copy['filePath']}"
+            all_dead_files.append(df_copy)
+        for tgt, srcs in pkg_analytics.get("dependents", {}).items():
+            mapped_tgt = id_map.get(tgt, tgt)
+            mapped_srcs = [id_map.get(s, s) for s in srcs]
+            all_dependents.setdefault(mapped_tgt, []).extend(mapped_srcs)
+
         meta = result["metadata"]
         total_files += meta["totalFiles"]
         analyzed_files += meta["analyzedFiles"]
@@ -704,7 +723,51 @@ def _scan_monorepo(root: Path, packages: list[Path]) -> dict:
             "framework": ", ".join(sorted(frameworks)),
             "workspaces": len(packages),
         },
+        "analytics": {
+            "circularDeps": all_circular_deps,
+            "deadFiles": all_dead_files,
+            "dependents": all_dependents,
+        },
     }
+
+
+def _detect_circular_deps(
+    resolved_imports: dict[Path, list[Path]],
+    node_id_map: dict[Path, str],
+) -> list[list[str]]:
+    """Detect circular dependency cycles via DFS (coloring)."""
+    cycles: list[list[str]] = []
+    seen: set[frozenset[str]] = set()
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color: dict[Path, int] = {fp: WHITE for fp in resolved_imports}
+    path: list[Path] = []
+
+    def dfs(fp: Path) -> None:
+        color[fp] = GRAY
+        path.append(fp)
+        for dep in resolved_imports.get(fp, []):
+            if dep not in color:
+                continue
+            if color[dep] == GRAY:
+                try:
+                    idx = path.index(dep)
+                except ValueError:
+                    continue
+                cycle_ids = [node_id_map[f] for f in path[idx:] if f in node_id_map]
+                if len(cycle_ids) >= 2:
+                    key = frozenset(cycle_ids)
+                    if key not in seen:
+                        seen.add(key)
+                        cycles.append(cycle_ids)
+            elif color[dep] == WHITE:
+                dfs(dep)
+        path.pop()
+        color[fp] = BLACK
+
+    for fp in resolved_imports:
+        if color.get(fp, WHITE) == WHITE:
+            dfs(fp)
+    return cycles
 
 
 def _scan_single_repo(root: Path) -> dict:
@@ -832,6 +895,7 @@ def _scan_single_repo(root: Path) -> dict:
             "apiCalls": file_data[fp].get("api_calls", []),
             "routes": routes,
             "importCount": import_count.get(fp, 0),
+            "lineCount": file_data[fp].get("line_count", 0),
         })
 
     # Edges — skip barrel files, connect through them
@@ -875,6 +939,7 @@ def _scan_single_repo(root: Path) -> dict:
             "apiCalls": [],
             "routes": [],
             "importCount": 0,
+            "lineCount": 0,
         })
         for fp in display_files:
             if endpoint in file_data[fp].get("api_calls", []):
@@ -910,6 +975,22 @@ def _scan_single_repo(root: Path) -> dict:
         {"id": "middleware", "index": 2, "label": "Middleware", "color": "#c084fc"},
     ]
 
+    # ── Analytics ──
+    circular_deps = _detect_circular_deps(resolved_imports, node_id_map)
+
+    dead_files = []
+    for fp in sorted(set(all_files) - used):
+        rel_dead = str(fp.relative_to(root))
+        dead_files.append({
+            "filePath": rel_dead,
+            "label": compute_display_name(fp, root, framework),
+            "layer": classify_layer(rel_dead, framework, file_data.get(fp, {})),
+        })
+
+    dependents: dict[str, list[str]] = {}
+    for src_id, tgt_id in edge_set:
+        dependents.setdefault(tgt_id, []).append(src_id)
+
     return {
         "repoPath": str(root),
         "srcRoot": str(src_root),
@@ -926,6 +1007,11 @@ def _scan_single_repo(root: Path) -> dict:
             "totalEdges": len(edges),
             "apiEndpoints": len(all_api_endpoints),
             "framework": framework,
+        },
+        "analytics": {
+            "circularDeps": circular_deps,
+            "deadFiles": dead_files,
+            "dependents": dependents,
         },
     }
 

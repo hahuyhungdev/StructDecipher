@@ -29,7 +29,10 @@ export function useWebSocket() {
           if (msg.activeNodes) setActiveNodes(msg.activeNodes);
 
           if (msg.type === "interaction" && msg.data) {
-            setEvents((prev) => [...prev.slice(-99), msg.data as InteractionEvent]);
+            setEvents((prev) => [
+              ...prev.slice(-99),
+              msg.data as InteractionEvent,
+            ]);
           }
           if (msg.type === "structure_update" && msg.data) {
             setStructureUpdate(msg.data);

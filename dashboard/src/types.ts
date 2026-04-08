@@ -17,6 +17,7 @@ export interface StructureNode {
   apiCalls: string[];
   routes: string[];
   importCount: number;
+  lineCount?: number;
 }
 
 export interface StructureEdge {
@@ -45,6 +46,11 @@ export interface StructureData {
     apiEndpoints: number;
     framework?: string;
   };
+  analytics?: {
+    circularDeps: string[][];
+    deadFiles: { filePath: string; label: string; layer: string }[];
+    dependents: Record<string, string[]>;
+  };
 }
 
 export interface InteractionEvent {
@@ -60,4 +66,11 @@ export interface WsMessage {
   type: "connected" | "interaction" | "structure_update" | "clear";
   data?: unknown;
   activeNodes?: string[];
+}
+
+export interface AnalyticsData {
+  heatmap: Record<string, number>;
+  circularDeps: string[][];
+  deadFiles: { filePath: string; label: string; layer: string }[];
+  dependents: Record<string, string[]>;
 }
