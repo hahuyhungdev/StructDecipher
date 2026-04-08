@@ -43,6 +43,7 @@ export interface StructureData {
     treeShakedFiles: number;
     totalEdges: number;
     apiEndpoints: number;
+    framework?: string;
   };
 }
 

@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState, useRef, useCallback } from "react";
 import { Handle, Position, type NodeProps } from "@xyflow/react";
 
 interface VizNodeData {
@@ -14,6 +14,7 @@ interface VizNodeData {
   active?: boolean;
   highlighted?: boolean;
   dimmed?: boolean;
+  searchMatch?: boolean;
 }
 
 export const VizNode = memo(function VizNode({
@@ -23,6 +24,16 @@ export const VizNode = memo(function VizNode({
   const d = data as VizNodeData;
   const isHl = d.highlighted || d.active;
   const isDim = d.dimmed && !d.active;
+  const [showTooltip, setShowTooltip] = useState(false);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  const onEnter = useCallback(() => {
+    hoverTimer.current = setTimeout(() => setShowTooltip(true), 400);
+  }, []);
+  const onLeave = useCallback(() => {
+    clearTimeout(hoverTimer.current);
+    setShowTooltip(false);
+  }, []);
 
   return (
     <div
@@ -32,9 +43,12 @@ export const VizNode = memo(function VizNode({
         isDim && "viz-node--dimmed",
         d.active && "viz-node--active",
         selected && "viz-node--selected",
+        d.searchMatch && "viz-node--search-match",
       ]
         .filter(Boolean)
         .join(" ")}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
     >
       {/* Colored left accent bar */}
       <div className="viz-node__accent" style={{ background: d.color }} />
@@ -70,6 +84,18 @@ export const VizNode = memo(function VizNode({
         position={Position.Bottom}
         style={{ background: d.color, width: 8, height: 8, border: "2px solid #0f172a" }}
       />
+
+      {/* ─── Tooltip ─── */}
+      {showTooltip && (
+        <div className="viz-tooltip">
+          <div className="viz-tooltip__title">{d.label}</div>
+          {d.filePath && <div className="viz-tooltip__row"><span className="viz-tooltip__key">Path</span>{d.filePath}</div>}
+          <div className="viz-tooltip__row"><span className="viz-tooltip__key">Layer</span>{d.layerLabel}</div>
+          <div className="viz-tooltip__row"><span className="viz-tooltip__key">Imports</span>{d.importCount} file{d.importCount !== 1 ? "s" : ""} import this</div>
+          {d.routes.length > 0 && <div className="viz-tooltip__row"><span className="viz-tooltip__key">Routes</span>{d.routes.join(", ")}</div>}
+          {d.apiCalls.length > 0 && <div className="viz-tooltip__row"><span className="viz-tooltip__key">API</span>{d.apiCalls.join(", ")}</div>}
+        </div>
+      )}
     </div>
   );
 });
