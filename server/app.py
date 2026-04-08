@@ -11,9 +11,8 @@ import asyncio
 import json
 import logging
 import os
-import subprocess
-import sys
 import time
+from collections import deque
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
@@ -23,13 +22,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, field_validator
 
+from .scanner import scan_repository
+
 # ───────────────────────── Config from environment ─────────────────────────
 
 # Load .env if python-dotenv is available
 try:
     from dotenv import load_dotenv
     load_dotenv(Path(__file__).parent.parent / ".env")
-    load_dotenv(Path(__file__).parent / ".env")  # backend-local override
+    load_dotenv(Path(__file__).parent / ".env")  # server-local override
 except ImportError:
     pass
 
@@ -50,10 +51,6 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
 )
 logger = logging.getLogger("viz-backend")
-
-# Add analyzer to path
-sys.path.insert(0, str(Path(__file__).parent.parent / "analyzer"))
-from scanner import scan_repository
 
 app = FastAPI(title="Visualization Backend", version="2.0.0")
 
@@ -76,8 +73,8 @@ current_structure: Optional[dict] = None
 # Active WebSocket connections for the dashboard
 dashboard_connections: list[WebSocket] = []
 
-# Active interaction events log
-interaction_log: list[dict] = []
+# Active interaction events log (O(1) bounded buffer, auto-evicts oldest)
+interaction_log: deque = deque(maxlen=MAX_INTERACTION_LOG)
 
 # Active node highlights (node_id -> timestamp)
 active_nodes: dict[str, str] = {}
@@ -125,7 +122,6 @@ class ScanRequest(BaseModel):
         v = v.strip()
         if not v:
             raise ValueError("repoPath is required")
-        # Block path traversal attempts
         normalized = os.path.normpath(v)
         if ".." in normalized.split(os.sep):
             raise ValueError("Path traversal not allowed")
@@ -156,7 +152,6 @@ async def get_structure():
     """Return the current analyzed structure."""
     global current_structure
     if current_structure is None:
-        # Try loading from disk
         cache_file = DATA_DIR / "structure.json"
         if cache_file.exists():
             try:
@@ -181,7 +176,6 @@ async def trigger_scan(req: ScanRequest):
     """Trigger a re-scan of the repository."""
     global current_structure, _last_scan_time, _scan_in_progress
 
-    # Rate limiting
     now = time.monotonic()
     if now - _last_scan_time < SCAN_RATE_LIMIT_SECONDS:
         wait = int(SCAN_RATE_LIMIT_SECONDS - (now - _last_scan_time)) + 1
@@ -205,7 +199,6 @@ async def trigger_scan(req: ScanRequest):
             content={"error": f"'{repo_path}' is not a directory"},
         )
 
-    # Basic safety: must contain package.json or src/
     if not (resolved / "package.json").exists() and not (resolved / "src").is_dir():
         return JSONResponse(
             status_code=400,
@@ -220,14 +213,12 @@ async def trigger_scan(req: ScanRequest):
         structure = scan_repository(str(resolved))
         current_structure = structure
 
-        # Persist to disk
         cache_file = DATA_DIR / "structure.json"
         try:
             cache_file.write_text(json.dumps(structure, indent=2), encoding="utf-8")
         except OSError as e:
             logger.error("Failed to write cache: %s", e)
 
-        # Notify dashboards
         await broadcast_to_dashboards({
             "type": "structure_update",
             "data": structure,
@@ -268,18 +259,13 @@ async def post_interaction(event: InteractionEvent):
     }
 
     interaction_log.append(entry)
-    # Keep bounded
-    while len(interaction_log) > MAX_INTERACTION_LOG:
-        interaction_log.pop(0)
 
-    # Track active nodes
     if event.eventType in ("mount", "navigate", "click"):
         active_nodes[event.componentName] = ts
         _component_visit_counts[event.componentName] = _component_visit_counts.get(event.componentName, 0) + 1
     elif event.eventType == "unmount":
         active_nodes.pop(event.componentName, None)
 
-    # Broadcast to dashboards
     await broadcast_to_dashboards({
         "type": "interaction",
         "data": entry,
@@ -293,7 +279,7 @@ async def post_interaction(event: InteractionEvent):
 async def get_interactions(limit: int = Query(default=50, le=500, ge=1)):
     """Return recent interaction events."""
     return {
-        "events": interaction_log[-limit:],
+        "events": list(interaction_log)[-limit:],
         "activeNodes": list(active_nodes.keys()),
     }
 
@@ -372,7 +358,6 @@ async def dashboard_ws(websocket: WebSocket):
             if data == "ping":
                 await websocket.send_text("pong")
     except asyncio.TimeoutError:
-        # No data in 60s — send a server ping to check liveness
         try:
             await websocket.send_text("ping")
         except Exception:
@@ -421,8 +406,3 @@ async def health():
         "activeNodes": len(active_nodes),
         "hasCachedStructure": current_structure is not None,
     }
-
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

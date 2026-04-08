@@ -732,125 +732,127 @@
     "totalEdges": 56,
     "apiEndpoints": 1,
     "framework": "react",
-    "isFsd": true
+    "isFsd": true,
+    "scanTimeMs": 27
   },
   "analytics": {
     "circularDeps": [],
+    "circularGroups": [],
     "deadFiles": [],
     "dependents": {
+      "src_features_comments_ui_CommentList_tsx": [
+        "src_widgets_post_feed_ui_PostFeed_tsx",
+        "src_entities_post_ui_PostWithComments_tsx"
+      ],
       "src_shared_ui_Button_tsx": [
-        "src_entities_post_ui_PostCard_tsx",
         "src_features_comments_ui_CommentList_tsx",
-        "src_features_auth_ui_AuthForm_tsx",
-        "src_entities_user_ui_UserCard_tsx"
+        "src_entities_post_ui_PostCard_tsx",
+        "src_entities_user_ui_UserCard_tsx",
+        "src_features_auth_ui_AuthForm_tsx"
       ],
-      "src_widgets_post_feed_ui_PostFeed_tsx": [
-        "src_pages_profile_ui_ProfilePage_tsx",
-        "src_pages_home_ui_HomePage_tsx",
-        "src_pages_posts_ui_PostsPage_tsx"
-      ],
-      "src_app_routes_AppRouter_tsx": [
-        "src_app_entrypoint_main_tsx"
-      ],
-      "src_pages_home_ui_HomePage_tsx": [
+      "src_widgets_header_ui_Header_tsx": [
         "src_app_routes_AppRouter_tsx"
+      ],
+      "src_shared_api_base_ts": [
+        "src_entities_comment_api_commentApi_ts",
+        "src_features_auth_api_authApi_ts",
+        "src_entities_user_api_userApi_ts",
+        "src_entities_post_api_postApi_ts"
+      ],
+      "src_shared_ui_Card_tsx": [
+        "src_entities_user_ui_UserCard_tsx",
+        "src_features_auth_ui_AuthForm_tsx",
+        "src_features_comments_ui_CommentList_tsx",
+        "src_entities_post_ui_PostCard_tsx"
+      ],
+      "src_entities_comment_model_types_ts": [
+        "src_features_comments_ui_CommentList_tsx",
+        "src_entities_comment_api_commentApi_ts",
+        "src_entities_comment_ui_CommentItem_tsx"
       ],
       "src_shared_lib_format_ts": [
         "src_entities_post_ui_PostCard_tsx"
       ],
-      "src_shared_ui_Card_tsx": [
-        "src_entities_user_ui_UserCard_tsx",
+      "src_shared_ui_Input_tsx": [
         "src_entities_post_ui_PostCard_tsx",
-        "src_features_comments_ui_CommentList_tsx",
-        "src_features_auth_ui_AuthForm_tsx"
-      ],
-      "src_shared_config_constants_ts": [
-        "src_widgets_header_ui_Header_tsx",
-        "src_widgets_post_feed_ui_PostFeed_tsx"
-      ],
-      "src_entities_post_ui_PostWithComments_tsx": [
-        "src_widgets_post_feed_ui_PostFeed_tsx"
-      ],
-      "src_entities_user_model_types_ts": [
-        "src_pages_profile_ui_ProfilePage_tsx",
-        "src_entities_user_api_userApi_ts",
         "src_entities_user_ui_UserCard_tsx",
-        "src_widgets_user_list_ui_UserList_tsx"
+        "src_features_auth_ui_AuthForm_tsx",
+        "src_features_comments_ui_CommentList_tsx"
+      ],
+      "src_entities_comment_ui_CommentItem_tsx": [
+        "src_features_comments_ui_CommentList_tsx"
+      ],
+      "src_pages_home_ui_HomePage_tsx": [
+        "src_app_routes_AppRouter_tsx"
       ],
       "src_entities_post_model_types_ts": [
-        "src_widgets_post_feed_ui_PostFeed_tsx",
-        "src_entities_post_api_postApi_ts",
+        "src_entities_post_ui_PostWithComments_tsx",
         "src_entities_post_ui_PostCard_tsx",
-        "src_entities_post_ui_PostWithComments_tsx"
+        "src_entities_post_api_postApi_ts",
+        "src_widgets_post_feed_ui_PostFeed_tsx"
+      ],
+      "src_entities_user_api_userApi_ts": [
+        "src_widgets_user_list_ui_UserList_tsx",
+        "src_pages_profile_ui_ProfilePage_tsx"
+      ],
+      "src_entities_comment_api_commentApi_ts": [
+        "src_features_comments_ui_CommentList_tsx"
+      ],
+      "src_features_auth_api_authApi_ts": [
+        "src_app_routes_AppRouter_tsx",
+        "src_features_auth_model_useAuth_ts"
+      ],
+      "src_pages_profile_ui_ProfilePage_tsx": [
+        "src_app_routes_AppRouter_tsx"
+      ],
+      "src_widgets_post_feed_ui_PostFeed_tsx": [
+        "src_pages_home_ui_HomePage_tsx",
+        "src_pages_posts_ui_PostsPage_tsx",
+        "src_pages_profile_ui_ProfilePage_tsx"
+      ],
+      "src_features_auth_model_useAuth_ts": [
+        "src_app_routes_AppRouter_tsx"
+      ],
+      "src_app_routes_AppRouter_tsx": [
+        "src_app_entrypoint_main_tsx"
+      ],
+      "src_shared_config_constants_ts": [
+        "src_widgets_post_feed_ui_PostFeed_tsx",
+        "src_widgets_header_ui_Header_tsx"
+      ],
+      "api_ep_0": [
+        "src_features_auth_api_authApi_ts"
+      ],
+      "src_entities_post_ui_PostCard_tsx": [
+        "src_widgets_post_feed_ui_PostFeed_tsx"
       ],
       "src_entities_user_ui_UserCard_tsx": [
         "src_widgets_user_list_ui_UserList_tsx",
         "src_pages_profile_ui_ProfilePage_tsx"
       ],
-      "src_shared_api_base_ts": [
-        "src_features_auth_api_authApi_ts",
-        "src_entities_post_api_postApi_ts",
-        "src_entities_user_api_userApi_ts",
-        "src_entities_comment_api_commentApi_ts"
+      "src_pages_posts_ui_PostsPage_tsx": [
+        "src_app_routes_AppRouter_tsx"
       ],
-      "src_entities_user_api_userApi_ts": [
-        "src_pages_profile_ui_ProfilePage_tsx",
-        "src_widgets_user_list_ui_UserList_tsx"
-      ],
-      "src_shared_ui_Input_tsx": [
+      "src_entities_user_model_types_ts": [
         "src_entities_user_ui_UserCard_tsx",
-        "src_entities_post_ui_PostCard_tsx",
-        "src_features_comments_ui_CommentList_tsx",
-        "src_features_auth_ui_AuthForm_tsx"
-      ],
-      "api_ep_0": [
-        "src_features_auth_api_authApi_ts"
-      ],
-      "src_widgets_header_ui_Header_tsx": [
-        "src_app_routes_AppRouter_tsx"
-      ],
-      "src_features_auth_api_authApi_ts": [
-        "src_features_auth_model_useAuth_ts",
-        "src_app_routes_AppRouter_tsx"
-      ],
-      "src_entities_post_api_postApi_ts": [
-        "src_widgets_post_feed_ui_PostFeed_tsx"
-      ],
-      "src_entities_comment_model_types_ts": [
-        "src_entities_comment_ui_CommentItem_tsx",
-        "src_entities_comment_api_commentApi_ts",
-        "src_features_comments_ui_CommentList_tsx"
-      ],
-      "src_features_comments_ui_CommentList_tsx": [
-        "src_entities_post_ui_PostWithComments_tsx",
-        "src_widgets_post_feed_ui_PostFeed_tsx"
-      ],
-      "src_entities_comment_ui_CommentItem_tsx": [
-        "src_features_comments_ui_CommentList_tsx"
-      ],
-      "src_entities_post_ui_PostCard_tsx": [
-        "src_widgets_post_feed_ui_PostFeed_tsx"
+        "src_widgets_user_list_ui_UserList_tsx",
+        "src_pages_profile_ui_ProfilePage_tsx",
+        "src_entities_user_api_userApi_ts"
       ],
       "src_widgets_user_list_ui_UserList_tsx": [
         "src_pages_home_ui_HomePage_tsx"
       ],
-      "src_pages_posts_ui_PostsPage_tsx": [
-        "src_app_routes_AppRouter_tsx"
+      "src_app_providers_Providers_tsx": [
+        "src_app_entrypoint_main_tsx"
+      ],
+      "src_entities_post_ui_PostWithComments_tsx": [
+        "src_widgets_post_feed_ui_PostFeed_tsx"
+      ],
+      "src_entities_post_api_postApi_ts": [
+        "src_widgets_post_feed_ui_PostFeed_tsx"
       ],
       "src_features_auth_ui_AuthForm_tsx": [
         "src_app_routes_AppRouter_tsx"
-      ],
-      "src_features_auth_model_useAuth_ts": [
-        "src_app_routes_AppRouter_tsx"
-      ],
-      "src_entities_comment_api_commentApi_ts": [
-        "src_features_comments_ui_CommentList_tsx"
-      ],
-      "src_pages_profile_ui_ProfilePage_tsx": [
-        "src_app_routes_AppRouter_tsx"
-      ],
-      "src_app_providers_Providers_tsx": [
-        "src_app_entrypoint_main_tsx"
       ]
     },
     "fsdViolations": [

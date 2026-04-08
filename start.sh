@@ -9,21 +9,18 @@ echo "════════════════════════�
 # ─── 1. Python Backend ───
 echo ""
 echo "▸ Starting FastAPI backend on :8000 ..."
-cd backend
-if [ -d ".venv" ]; then
-  .venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 --reload &
+if [ -d "server/.venv" ] && [ -f "server/.venv/bin/uvicorn" ]; then
+  server/.venv/bin/uvicorn server.app:app --host 0.0.0.0 --port 8000 --reload &
+elif python3 -m venv server/.venv 2>/dev/null; then
+  server/.venv/bin/pip install -q -r server/requirements.txt
+  server/.venv/bin/uvicorn server.app:app --host 0.0.0.0 --port 8000 --reload &
 else
-  # Try venv creation, fall back to system python
-  if python3 -m venv .venv 2>/dev/null; then
-    .venv/bin/pip install -q -r requirements.txt
-    .venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 --reload &
-  else
-    pip3 install --break-system-packages -q -r requirements.txt 2>/dev/null || true
-    python3 -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload &
-  fi
+  # venv unavailable — use system python directly
+  rm -rf server/.venv 2>/dev/null || true
+  pip3 install --break-system-packages -q -r server/requirements.txt 2>/dev/null || true
+  python3 -m uvicorn server.app:app --host 0.0.0.0 --port 8000 --reload &
 fi
 BACKEND_PID=$!
-cd ..
 
 # ─── 2. Dashboard ───
 echo "▸ Starting Visualization Dashboard on :5173 ..."
