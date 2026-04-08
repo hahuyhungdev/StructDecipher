@@ -32,11 +32,12 @@ IGNORE_DIRS = {
 
 # ───────────────────────── Regex Patterns ─────────────────────────
 
-# import ... from 'path' | require('path') | dynamic import('path')
+# import ... from 'path' | require('path') | dynamic import('path') | export ... from 'path'
 IMPORT_RE = re.compile(
     r"""(?:import\s+(?:(?:type\s+)?(?:[\w*\s{},]+)\s+from\s+)?['"]([^'"]+)['"])|"""
     r"""(?:require\s*\(\s*['"]([^'"]+)['"]\s*\))|"""
-    r"""(?:import\s*\(\s*['"]([^'"]+)['"]\s*\))""",
+    r"""(?:import\s*\(\s*['"]([^'"]+)['"]\s*\))|"""
+    r"""(?:export\s+(?:(?:type\s+)?(?:[\w*\s{},]+)\s+from\s+)?['"]([^'"]+)['"])""",
     re.MULTILINE,
 )
 
@@ -198,7 +199,7 @@ def scan_file(filepath: Path) -> dict:
     # Imports
     imports = []
     for m in IMPORT_RE.finditer(content):
-        imp = m.group(1) or m.group(2) or m.group(3)
+        imp = m.group(1) or m.group(2) or m.group(3) or m.group(4)
         if imp:
             imports.append(imp)
 

@@ -2,9 +2,9 @@
  * Feature: Post Feed - displays recent posts.
  */
 import { useEffect, useState } from "react";
-import { useTracking } from "../hooks/useTracking";
-import { fetchPosts } from "../services/api";
-import Card from "../components/Card";
+import { useTracking } from "../../hooks/useTracking";
+import { fetchPosts } from "../../services/api";
+import Card from "../../components/Card";
 
 interface Post {
   id: number;

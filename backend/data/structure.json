@@ -46,9 +46,9 @@
       "importCount": 2
     },
     {
-      "id": "src__components__Card_tsx",
-      "label": "Card",
-      "filePath": "src/components/Card.tsx",
+      "id": "src__components__Card__index_ts",
+      "label": "index",
+      "filePath": "src/components/Card/index.ts",
       "layer": "shared",
       "layerIndex": 2,
       "layerLabel": "Shared / UI",
@@ -57,9 +57,9 @@
       "importCount": 2
     },
     {
-      "id": "src__features__PostFeed_tsx",
-      "label": "PostFeed",
-      "filePath": "src/features/PostFeed.tsx",
+      "id": "src__features__PostFeed__index_tsx",
+      "label": "index",
+      "filePath": "src/features/PostFeed/index.tsx",
       "layer": "feature",
       "layerIndex": 1,
       "layerLabel": "Features",
@@ -196,9 +196,9 @@
       "target": "src__features__UserList_tsx"
     },
     {
-      "id": "e_src__pages__HomePage_tsx__src__features__PostFeed_tsx",
+      "id": "e_src__pages__HomePage_tsx__src__features__PostFeed__index_tsx",
       "source": "src__pages__HomePage_tsx",
-      "target": "src__features__PostFeed_tsx"
+      "target": "src__features__PostFeed__index_tsx"
     },
     {
       "id": "e_src__features__UserList_tsx__src__hooks__useTracking_ts",
@@ -211,9 +211,9 @@
       "target": "src__services__api_ts"
     },
     {
-      "id": "e_src__features__UserList_tsx__src__components__Card_tsx",
+      "id": "e_src__features__UserList_tsx__src__components__Card__index_ts",
       "source": "src__features__UserList_tsx",
-      "target": "src__components__Card_tsx"
+      "target": "src__components__Card__index_ts"
     },
     {
       "id": "e_src__features__UserList_tsx__src__components__Button_tsx",
@@ -231,19 +231,19 @@
       "target": "src__components__Button_tsx"
     },
     {
-      "id": "e_src__features__PostFeed_tsx__src__hooks__useTracking_ts",
-      "source": "src__features__PostFeed_tsx",
+      "id": "e_src__features__PostFeed__index_tsx__src__hooks__useTracking_ts",
+      "source": "src__features__PostFeed__index_tsx",
       "target": "src__hooks__useTracking_ts"
     },
     {
-      "id": "e_src__features__PostFeed_tsx__src__services__api_ts",
-      "source": "src__features__PostFeed_tsx",
+      "id": "e_src__features__PostFeed__index_tsx__src__services__api_ts",
+      "source": "src__features__PostFeed__index_tsx",
       "target": "src__services__api_ts"
     },
     {
-      "id": "e_src__features__PostFeed_tsx__src__components__Card_tsx",
-      "source": "src__features__PostFeed_tsx",
-      "target": "src__components__Card_tsx"
+      "id": "e_src__features__PostFeed__index_tsx__src__components__Card__index_ts",
+      "source": "src__features__PostFeed__index_tsx",
+      "target": "src__components__Card__index_ts"
     },
     {
       "id": "e_src__pages__DashboardPage_tsx__src__hooks__useTracking_ts",
@@ -286,7 +286,7 @@
       "parentId": "src__pages__HomePage_tsx",
       "childIds": [
         "src__features__UserList_tsx",
-        "src__features__PostFeed_tsx"
+        "src__features__PostFeed__index_tsx"
       ]
     },
     {
@@ -298,9 +298,9 @@
     }
   ],
   "metadata": {
-    "totalFiles": 11,
+    "totalFiles": 12,
     "analyzedFiles": 9,
-    "treeShakedFiles": 2,
+    "treeShakedFiles": 3,
     "totalEdges": 19,
     "apiEndpoints": 4
   }
